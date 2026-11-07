@@ -253,9 +253,10 @@ def apply_measurement_error(
 
 def assign_splits(source_ids, rng, fractions=(0.6, 0.2, 0.2)) -> dict:
     """按源射门划分，所有噪声副本共享同一 split。"""
-    if (len(fractions) != 3 or not all(isfinite(x) and x > 0 for x in fractions)
+    if (len(fractions) != 3 or not all(isfinite(x) and x >= 0 for x in fractions)
+            or not any(x > 0 for x in fractions)
             or not np.isclose(sum(fractions), 1.0)):
-        raise ValueError("三组比例须为正数且总和为 1。")
+        raise ValueError("三组比例须为非负数、至少一组为正且总和为 1。")
     ids = list(source_ids)
     if len(ids) != len(set(ids)):
         raise ValueError("source_id 必须唯一。")

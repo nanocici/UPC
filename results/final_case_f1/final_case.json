@@ -1,0 +1,103 @@
+{
+  "model": "F1 (F, b_y prior 0.10, b_z prior 0.20, fixed C_D=0.22)",
+  "point_kind": "fixed_bandwidth_smooth_mode_0.10m",
+  "point_yz_m": [
+    2.875,
+    1.925
+  ],
+  "arrival_time_median_s": 0.38768793313392635,
+  "posterior_interval_s": [
+    0.38273881673645554,
+    0.39430455129178865
+  ],
+  "calibrated_time_interval_s": [
+    0.3714354087053343,
+    0.4039404575625184
+  ],
+  "time_calibration_q_ms": 15.188910308210842,
+  "time_interval_width_ms": 32.50504885718403,
+  "region": {
+    "center_yz_m": [
+      2.9057531544942057,
+      1.9285065612977923
+    ],
+    "covariance_m2": [
+      [
+        0.11773947070453203,
+        0.00228166129867668
+      ],
+      [
+        0.0022816612986766797,
+        0.05313459667801144
+      ]
+    ],
+    "threshold": 4.697627799859659
+  },
+  "region_area_m2": 1.1668027273961783,
+  "goal_probability": 0.9666570836862819,
+  "unknown_event_mass": 0.0,
+  "notes": "Primary point is the fixed 0.10 m KDE smooth mode, inside-conditioned, four seeds equally weighted. Mean is auxiliary only. Time interval uses frozen global additive q. Spatial region is model-internal, not externally calibrated.",
+  "primary_point": {
+    "kind": "fixed_bandwidth_smooth_mode",
+    "condition": "inside_conditioned",
+    "bandwidth_m": 0.1,
+    "y_m": 2.875,
+    "z_m": 1.925,
+    "cross_seed_diameter_m": 0.022360679774998216,
+    "last_doubling_shift_m": 0.014142135623731277,
+    "per_seed_peaks_m": [
+      {
+        "seed": 20261109,
+        "y": 2.895,
+        "z": 1.925
+      },
+      {
+        "seed": 20261210,
+        "y": 2.875,
+        "z": 1.925
+      },
+      {
+        "seed": 20261311,
+        "y": 2.875,
+        "z": 1.915
+      },
+      {
+        "seed": 20261412,
+        "y": 2.875,
+        "z": 1.925
+      }
+    ],
+    "mass_in_window": 0.9999999889750242,
+    "outside_mass": 1.1024975821172234e-08,
+    "boundary_peak": false,
+    "note": "Four seeds condition-normalized and equally weighted; fixed 0.10 m bandwidth; not a unique continuous mode."
+  },
+  "mean_auxiliary_yz_m": [
+    2.9057531544942057,
+    1.9285065612977923
+  ],
+  "raw_grid_64k": {
+    "mode_yz_m": [
+      2.8975,
+      1.8808
+    ],
+    "pass": true,
+    "within_seed_grid_diameter_m": 0.18328218983608596,
+    "base_cross_seed_m": 0.10166666666666657,
+    "base_last_doubling_m": 0.0,
+    "historical_failure": "4k/8k/16k raw-grid checks failed; preserved separately.",
+    "note": "New 64k result passes, but 0.1833 m is close to the 0.20 m threshold."
+  },
+  "historical_4k_mode_candidate": {
+    "center_yz_m": [
+      2.8975,
+      1.7791666666666668
+    ],
+    "cell_probability": 0.025685989400964965,
+    "grid_width_m": 0.10166666666666667,
+    "grid_shift_m": 0.0
+  },
+  "historical_4k_mode_stable": false,
+  "mode_stability_source": "F1 64k x 4 seeds; raw grid and 0.10 m KDE both pass; historical 4k failure retained.",
+  "raw_grid_64k_pass": true
+}

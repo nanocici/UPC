@@ -1,0 +1,21 @@
+{
+  "dataset": "data/time_model_200",
+  "data_seed": 20261109,
+  "method": "F1_round2",
+  "task_count": 800,
+  "variants": {
+    "F0": {
+      "model": "F",
+      "vertical_prior_std": null
+    },
+    "F1": {
+      "model": "F",
+      "vertical_prior_std": 0.1
+    }
+  },
+  "source_counts": {
+    "calibration": 100,
+    "test": 100
+  },
+  "notes": "F1 fixed Cd=0.22 only; time error model calibration/test; no original calibration/test."
+}

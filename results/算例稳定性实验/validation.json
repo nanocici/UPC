@@ -1,0 +1,54 @@
+{
+  "all_pass": true,
+  "checks": {
+    "saved_manifest_matches": true,
+    "all_diagnostics_pass": true,
+    "20261109_count": true,
+    "20261109_weights_finite_normalized": true,
+    "20261109_ess_matches": true,
+    "20261109_weights_match_logs": true,
+    "20261210_count": true,
+    "20261210_weights_finite_normalized": true,
+    "20261210_ess_matches": true,
+    "20261210_weights_match_logs": true,
+    "20261311_count": true,
+    "20261311_weights_finite_normalized": true,
+    "20261311_ess_matches": true,
+    "20261311_weights_match_logs": true,
+    "20261412_count": true,
+    "20261412_weights_finite_normalized": true,
+    "20261412_ess_matches": true,
+    "20261412_weights_match_logs": true
+  },
+  "candidate_counts": {
+    "20261109": {
+      "all_candidates": 64000,
+      "positive_weight": 60943,
+      "rejected": 3057
+    },
+    "20261210": {
+      "all_candidates": 64000,
+      "positive_weight": 60833,
+      "rejected": 3167
+    },
+    "20261311": {
+      "all_candidates": 64000,
+      "positive_weight": 60862,
+      "rejected": 3138
+    },
+    "20261412": {
+      "all_candidates": 64000,
+      "positive_weight": 60883,
+      "rejected": 3117
+    }
+  },
+  "project_tests": {
+    "passed": 133,
+    "seconds": 7.217,
+    "command": ".venv/bin/python -m unittest discover -s tests"
+  },
+  "frozen_config_check": true,
+  "integration_note": "Added Chinese directory fallback to final_pipeline and updated two tests to use its resolved path; model unchanged.",
+  "visual_review": "All four figures inspected; convergence labels corrected and rechecked.",
+  "analyze_only_verified": true
+}

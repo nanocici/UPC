@@ -1,0 +1,240 @@
+{
+  "summary": {
+    "effective_samples": 44187.596464509326,
+    "event_probabilities": {
+      "goal_inside": 0.3613646404922436,
+      "goal_outside": 0.6386353595077565,
+      "ground": 0.0,
+      "boundary": 0.0,
+      "unresolved": 0.0,
+      "failure": 0.0
+    },
+    "unknown_event_mass": 0.0,
+    "direct_crossing": {
+      "posterior_mass": 1.0,
+      "effective_samples": 44187.59646450931,
+      "mean_yz_m": [
+        -1.7721364649919344,
+        2.5242364794809635
+      ],
+      "covariance_m2": [
+        [
+          0.12095791964994071,
+          -0.0037180675534993404
+        ],
+        [
+          -0.00371806755349934,
+          0.05289760268750503
+        ]
+      ],
+      "region": {
+        "center_yz_m": [
+          -1.7721364649919344,
+          2.5242364794809635
+        ],
+        "covariance_m2": [
+          [
+            0.12095791964994071,
+            -0.0037180675534993404
+          ],
+          [
+            -0.00371806755349934,
+            0.05289760268750503
+          ]
+        ],
+        "threshold": 4.632313939056359
+      },
+      "region_area_m2": 1.1628222731669244,
+      "most_likely_cell": {
+        "center_yz_m": [
+          -1.7791666666666668,
+          2.4908333333333332
+        ],
+        "cell_probability": 0.020734055249498968,
+        "grid_width_m": 0.10166666666666667,
+        "grid_shift_m": 0.0
+      },
+      "arrival_time_median_s": 0.38832107550856587,
+      "arrival_time_90_interval_s": [
+        0.3837223104329953,
+        0.3941855000501257
+      ]
+    },
+    "inside_conditioned": {
+      "posterior_mass": 0.3613646404922436,
+      "effective_samples": 15353.838418238975,
+      "mean_yz_m": [
+        -1.755744000528568,
+        2.2861892463739224
+      ],
+      "covariance_m2": [
+        [
+          0.1192756220422243,
+          0.0003190239352115725
+        ],
+        [
+          0.00031902393521157294,
+          0.014520566513988569
+        ]
+      ],
+      "region": {
+        "center_yz_m": [
+          -1.755744000528568,
+          2.2861892463739224
+        ],
+        "covariance_m2": [
+          [
+            0.1192756220422243,
+            0.0003190239352115725
+          ],
+          [
+            0.00031902393521157294,
+            0.014520566513988569
+          ]
+        ],
+        "threshold": 4.495821362311235
+      },
+      "region_area_m2": 0.5877786185126116,
+      "most_likely_cell": {
+        "center_yz_m": [
+          -1.6775,
+          2.3891666666666667
+        ],
+        "cell_probability": 0.049903856714924984,
+        "grid_width_m": 0.10166666666666667,
+        "grid_shift_m": 0.0
+      },
+      "arrival_time_median_s": 0.3863801620309007,
+      "arrival_time_90_interval_s": [
+        0.3826494633235327,
+        0.39124076881033965
+      ]
+    }
+  },
+  "first_half": {
+    "effective_samples": 22091.47417455751,
+    "event_probabilities": {
+      "goal_inside": 0.36434020903172293,
+      "goal_outside": 0.6356597909682772,
+      "ground": 0.0,
+      "boundary": 0.0,
+      "unresolved": 0.0,
+      "failure": 0.0
+    },
+    "unknown_event_mass": 0.0,
+    "direct_crossing": {
+      "posterior_mass": 1.0,
+      "effective_samples": 22091.47417455751,
+      "mean_yz_m": [
+        -1.7727019190009994,
+        2.5231445800488803
+      ],
+      "covariance_m2": [
+        [
+          0.12167875083309898,
+          -0.0038003245190479967
+        ],
+        [
+          -0.0038003245190479967,
+          0.053397165490299846
+        ]
+      ],
+      "region": {
+        "center_yz_m": [
+          -1.7727019190009994,
+          2.5231445800488803
+        ],
+        "covariance_m2": [
+          [
+            0.12167875083309898,
+            -0.0038003245190479967
+          ],
+          [
+            -0.0038003245190479967,
+            0.053397165490299846
+          ]
+        ],
+        "threshold": 4.596167904924458
+      },
+      "region_area_m2": 1.162596498216765,
+      "most_likely_cell": {
+        "center_yz_m": [
+          -1.7791666666666668,
+          2.4908333333333332
+        ],
+        "cell_probability": 0.019989567225572227,
+        "grid_width_m": 0.10166666666666667,
+        "grid_shift_m": 0.0
+      },
+      "arrival_time_median_s": 0.388325549968695,
+      "arrival_time_90_interval_s": [
+        0.3837124034002684,
+        0.39424015588444516
+      ]
+    },
+    "inside_conditioned": {
+      "posterior_mass": 0.36434020903172293,
+      "effective_samples": 7760.134663054951,
+      "mean_yz_m": [
+        -1.7558888723811308,
+        2.284533726212479
+      ],
+      "covariance_m2": [
+        [
+          0.11915043731748168,
+          0.00015945017483717338
+        ],
+        [
+          0.00015945017483717347,
+          0.014398690101302979
+        ]
+      ],
+      "region": {
+        "center_yz_m": [
+          -1.7558888723811308,
+          2.284533726212479
+        ],
+        "covariance_m2": [
+          [
+            0.11915043731748168,
+            0.00015945017483717338
+          ],
+          [
+            0.00015945017483717347,
+            0.014398690101302979
+          ]
+        ],
+        "threshold": 4.428956633006546
+      },
+      "region_area_m2": 0.5763116451152696,
+      "most_likely_cell": {
+        "center_yz_m": [
+          -1.6775,
+          2.3891666666666667
+        ],
+        "cell_probability": 0.04866142757734172,
+        "grid_width_m": 0.10166666666666667,
+        "grid_shift_m": 0.0
+      },
+      "arrival_time_median_s": 0.38636128445220513,
+      "arrival_time_90_interval_s": [
+        0.3826142586655535,
+        0.39122575336538856
+      ]
+    }
+  },
+  "diagnostics": {
+    "sampling_stable": true,
+    "max_event_probability_change": 0.002975568539479334,
+    "conditional_mean_shift_m": 0.001229627019120532,
+    "relative_region_area_change": 0.00019416118470505793,
+    "conditional_mode_cell_shift_m": 0.0,
+    "mode_sampling_stable": true
+  },
+  "output_validity": {
+    "event_probability": true,
+    "conditional_mean": true,
+    "prediction_region": true
+  },
+  "success": true
+}

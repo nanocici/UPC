@@ -1,0 +1,29 @@
+{
+  "raw_files": 1496,
+  "raw_candidates": 95744000,
+  "all_weight_checks_pass": true,
+  "project_tests_passed": 139,
+  "numerical_validation_pass": true,
+  "frozen_config_check": true,
+  "wall_s": 2.7605981249944307,
+  "source_sha256_checks": {
+    "final_point_evaluation.py": true,
+    "batch_f_sampler.py": true,
+    "batch_f_dynamics.c": true,
+    "config.py": true,
+    "final_config.py": true,
+    "physics.py": true,
+    "inverse.py": true,
+    "uncertainty.py": true,
+    "data.py": true
+  },
+  "core_model_unchanged_since_case_stability": {
+    "config.py": true,
+    "final_config.py": true,
+    "physics.py": true,
+    "inverse.py": true,
+    "uncertainty.py": true
+  },
+  "prediction_seal_unchanged_after_scoring": true,
+  "figures_visually_verified": true
+}

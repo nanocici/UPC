@@ -1,0 +1,94 @@
+{
+  "config": {
+    "model": "F",
+    "b_y_prior_std": 0.1,
+    "b_z_prior_std": 0.2,
+    "drag_coefficient": 0.22,
+    "sigma_m": 0.01,
+    "time_q_s": 0.015188910308210842,
+    "spatial_threshold": 3.083525450931334,
+    "mode_bandwidth_m": 0.1,
+    "smooth_mode_yz_m": [
+      2.875,
+      1.925
+    ],
+    "raw_grid_mode_yz_m": [
+      2.8975,
+      1.8808
+    ],
+    "mean_auxiliary_yz_m": [
+      2.9057531544942057,
+      1.9285065612977923
+    ],
+    "case_seed": 20261109,
+    "base_samples": 2000,
+    "total_proposals": 4000,
+    "mode_seed_count": 4
+  },
+  "case": {
+    "initial_time_s": 0.0,
+    "initial_position_m": [
+      0.0,
+      0.0,
+      0.11
+    ],
+    "times_s": [
+      0.05,
+      0.1
+    ],
+    "positions_m": [
+      [
+        1.5,
+        0.45,
+        0.44
+      ],
+      [
+        2.96,
+        0.86,
+        0.74
+      ]
+    ],
+    "goal_x_m": 11.0,
+    "goal_y_bounds_m": [
+      -3.66,
+      3.66
+    ],
+    "goal_z_bounds_m": [
+      0.0,
+      2.44
+    ]
+  },
+  "environment": {
+    "mass_kg": 0.43,
+    "radius_m": 0.11,
+    "gravity_m_s2": 9.81,
+    "air_density_kg_m3": 1.2,
+    "kinematic_viscosity_m2_s": 1.5e-05,
+    "wind_m_s": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "solver": {
+    "method": "RK45",
+    "relative_tolerance": 1e-07,
+    "position_absolute_tolerance_m": 1e-09,
+    "velocity_absolute_tolerance_m_s": 1e-09,
+    "max_step_s": 0.01,
+    "initial_horizon_s": 2.0,
+    "maximum_horizon_s": 4.0,
+    "event_time_tolerance_s": 1e-07
+  },
+  "versions": {
+    "python": "3.13.13",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1"
+  },
+  "hashes": {
+    "final_case.json": "18e97862d5fc101ef085b28deb66af4171cb65fd801da0854ee47ab6da4002ad",
+    "source": "586e558a6ecf0eade5fd35e54f78b08efea95c64cfbb7c8edf7667b0702f55ea",
+    "config": "6ce392074cbf9927d5bc785ae4deecab4e3548f2e0d8fa7b59ffe8e1ef164bb9"
+  },
+  "note": "F1 is a prior setting; spatial/time calibration are post-processing."
+}

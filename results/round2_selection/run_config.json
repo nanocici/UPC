@@ -1,0 +1,77 @@
+{
+  "prereg": "/Users/nanocici/Documents/ChatGPT/UPC/docs/superpowers/specs/2026-11-07-round2-prereg.md",
+  "prereg_sha256": "4fee25d48f0f274cf8fd18bf47bd37c0ab12f07018e91c29ab458fa8ca07199d",
+  "dataset": "data/round2_development",
+  "data_seed": 20261108,
+  "source_count": 100,
+  "observation_count": 400,
+  "mechanism_counts": {
+    "constant": 20,
+    "variable_drag": 20,
+    "spin": 20,
+    "wind": 20,
+    "combined": 20
+  },
+  "variants": {
+    "F0": {
+      "model": "F",
+      "vertical_prior_std": null
+    },
+    "F1": {
+      "model": "F",
+      "vertical_prior_std": 0.1
+    }
+  },
+  "methods": {
+    "F0": "F0_round2",
+    "F1": "F1_round2"
+  },
+  "task_count": 800,
+  "inference": {
+    "position_sigma_m": 0.01,
+    "rounding_half_width_m": 0.005,
+    "fixed_drag_coefficient": 0.22,
+    "drag_bounds": [
+      0.08,
+      0.55
+    ],
+    "drag_prior_mean": 0.22,
+    "drag_prior_std": 0.1,
+    "transverse_prior_std": 0.2,
+    "vertical_force_prior_std": null,
+    "side_force_prior_std": null,
+    "transverse_norm_max": 0.5,
+    "vx_bounds_m_s": [
+      0.0,
+      60.0
+    ],
+    "vy_bounds_m_s": [
+      -30.0,
+      30.0
+    ],
+    "vz_bounds_m_s": [
+      0.0,
+      30.0
+    ],
+    "max_iterations_per_start": 100,
+    "prediction_region_mass": 0.9
+  },
+  "uncertainty": {
+    "base_samples": 2000,
+    "min_effective_samples": 300.0,
+    "min_conditional_effective_samples": 100.0,
+    "event_probability_tolerance": 0.02,
+    "mean_shift_tolerance_m": 0.05,
+    "relative_area_tolerance": 0.15,
+    "unknown_mass_tolerance": 1e-06,
+    "grid_width_m": 0.10166666666666667,
+    "mode_shift_tolerance_m": 0.2,
+    "student_df": 5.0,
+    "broad_component_weight": 0.15,
+    "broad_standard_deviation_factor": 3.0,
+    "max_sample_doublings": 0
+  },
+  "starts": 3,
+  "proposals_per_task": 4000,
+  "notes": "Development only. F0/F1 selection; S structural control deferred. No calibration/test read."
+}

@@ -1,6 +1,6 @@
 # 三人共用的代码起点
 
-最初规划的七个文件（含 `run.py`）均已实现，包括固定阻力反演、条件后验与最小统一入口。参数依据、阻力剖面/积分、批量区域验证、校准和独立测试仍有待办。
+最初规划的七个文件（含 `run.py`）均已实现，另新增 `profile.py` 的阻力重拟合剖面、`mode_stability.py` 的算例众数检查和 `development_regions.py` 的开发区域检验入口。项目累计 130 项检查通过。参数依据、阻力积分、区域校准和独立测试仍有待办。
 
 ## 先检查配置
 
@@ -111,9 +111,9 @@ result = simulate("S", candidate, CASE.times_s)
 | 乙 | inverse.py | 已实现固定阻力 S/F 的 MAP/LS、多起点、诊断和预测导出 |
 | 乙 | uncertainty.py | 已实现固定 Cd 带权条件后验、事件概率、均值/格网众数、区域与采样诊断 |
 | 丙 | data.py | 已实现独立 H 生成、误差、数据分组、文件读写及带单位 CSV 读取 |
-| 丙 | evaluate.py | 已实现评价、分层、整组重采样、预测格式和 G/A 开发集示例；S/F 与概率区域待接入 |
+| 丙 | evaluate.py | 已实现评价、分层、整组重采样和预测格式；G/A、S/F 点预测及开发概率区域均已接入 |
 
-反演和条件后验输出均可交给评价器；后续优先完成阻力剖面与区域检验。配置需要修改时由一人维护并通知其他人，避免三份默认值产生差异。
+反演和条件后验输出均可交给评价器；阻力剖面已完成，后续优先进行开发组区域检验及误差/先验敏感性。配置需要修改时由一人维护并通知其他人，避免三份默认值产生差异。
 
 ## 使用 data.py 生成测试数据
 
@@ -244,7 +244,7 @@ Windows 使用 `.\.venv\Scripts\python.exe code\evaluate.py --predictions result
 - **Brier 分数**：在真值直接入框/越框、先接地等标签明确案例计算；边界、未决和生成失败排除并保留计数。缺概率的案例另报数量，不自动填 0。
 - **样本量**：区分噪声观测案例数和独立源射门数。`failure_or_missing_rate` 不含 `unavailable`，后者单列；真值直接过线中的点预测提供比例同时体现没有门线输出的情况。
 
-G/A 开发示例与 S/F 点预测已接入。条件后验的均值、区域与事件概率接口已实现，实际区域覆盖率、区域校准和独立测试仍待批量检验。
+G/A 开发示例、S/F 点预测及条件后验区域均已接入。现有开发示例的区域覆盖率已通过 development_regions.py 实际评分，见开发区域检查报告；区域校准、实测和独立测试仍待完成。
 
 ## 使用 inverse.py 反推参数
 
@@ -303,7 +303,7 @@ if fit["success"]:
     print(fit["simulation"])
 ```
 
-`fit_case` 支持 `case`、`environment`、`solver`、`settings`、`drag_coefficient`、`sigma_m`、`frame_correlation`、`covariance_m2` 与 `initial_guesses`；自定义初值按共同参数顺序提供。之后的阻力剖面可改变 `drag_coefficient` 并每层重拟合，当前尚未批量实现剖面或阻力积分。
+`fit_case` 支持 `case`、`environment`、`solver`、`settings`、`drag_coefficient`、`sigma_m`、`frame_correlation`、`covariance_m2` 与 `initial_guesses`；自定义初值按共同参数顺序提供。`profile.py` 已通过改变 `drag_coefficient` 并每层重新调用此接口实现题目剖面；阻力积分尚未实现。
 
 ## 使用 uncertainty.py 计算预测范围
 
@@ -395,3 +395,137 @@ results/run_example_时间/
 第二种方式为 `--task development --dataset data/synthetic_demo`，仅编排已有的 S/F 点反演、G/A 基线和开发组评价，默认仍只选 F；需要 S/F 时加 `--model both`。这一最小入口不会自动生成数据，也不自动访问校准/测试组。批量概率区域、阻力剖面、敏感性、校准和独立测试不在本次入口任务中。本轮仅实际执行了题目 F 算例；开发模式只核对调用参数与边界。
 
 已保存本轮流程检查于 `results/run_example_check`，说明见 reports/RUN_CHECK_REPORT.md。后续安排实验前，先根据 plan.md 和 todo.md 确定研究设置与预算。
+
+## 使用 profile.py 检查阻力依赖
+
+该独立入口只计算题目算例，不访问开发、校准或测试组，也未加入 `run.py` 的默认任务。
+
+Mac：
+
+```bash
+.venv/bin/python code/profile.py --output results/my_profile --plot
+```
+
+Windows PowerShell：
+
+```powershell
+.\.venv\Scripts\python.exe code\profile.py --output results\my_profile --plot
+```
+
+默认 S/F、LS/MAP、25 个等距阻力节点加名义 Cd=0.22，共 26 层、104 次基础拟合，每层三个起点。每改变 Cd 都重新拟合初速度与横向参数；LS 和 MAP 分别优化。固定名义 MAP 其他参数的前向扫描另外保存，共 52 条。
+
+`--model S` 或 `--model F` 只运行一种结构；`--nodes` 改等距层数，`--drag-min/--drag-max` 须在共同工作边界内且包含名义 Cd；`--sigma` 显式改变独立高斯工作误差；`--starts` 指定 1–9 个基础起点；`--check-starts` 默认为 9，不能少于基础起点。已有目录拒绝覆盖。
+
+端点、名义层、目标/Y/Z/T 极值及异常层会自动以更多起点、十倍收紧积分容差和半步长重拟合。复核的门线位移标准为 0.001 m、时间标准为 1e-5 s，目标差标准为 `1e-5*max(1,abs(base_objective))`。复核未通过时保留原结果并标记 `review_required`，不自动替换基础剖面。全部配置和相关源码 SHA256 存于 `run_config.json`。
+
+输出 `fits.jsonl`、`profile.csv`、`forward_scan.jsonl`、`verification.jsonl`、`summary.json`；`--plot` 另生成 `fit_profiles.png` 和 `goal_profiles.png`。CSV 的 `pure_data_profile_R` 仅填写 LS 数据卡方；MAP 数据卡方、先验罚项及完整目标另列。所有起点和完整雅可比诊断保存在 JSONL 中。先接地或传播失败不会产生门线坐标。
+
+已运行结果见 `results/profile_example`，104 次基础拟合收敛、16 次加严复核通过，报告见 `reports/PROFILE_CHECK_REPORT.md`。本轮未自动筛选观测相容层，整个工作网格的变化范围不是置信区间。轨迹点解也不是门线后验众数，不能将各层最佳解等权混合成概率结论。
+
+## 使用 mode_stability.py 检查算例众数
+
+该脚本独立于阻力剖面：固定 Cd=0.22，仅处理题目算例，S 为对照，F 为重点；不访问开发/校准/测试数据。
+
+Mac：
+
+```bash
+.venv/bin/python code/mode_stability.py --output results/my_mode_stability --plot
+```
+
+Windows PowerShell：
+
+```powershell
+.\.venv\Scripts\python.exe code\mode_stability.py --output results\my_mode_stability --plot
+```
+
+默认用两个计算进程运行独立任务，完整矩阵为 26 次后验运行、256000 次提议：
+
+| 实验 | 模型 | 误差 sigma / m | 横向先验尺度 | 每模型种子数 | 实际提议数 |
+|---|---|---|---|---:|---:|
+| 名义采样量/种子检查 | S/F | 0.01 | 0.20 | 3 | 每种子 16000，分析其 4000/8000/16000 前缀 |
+| 先验敏感性 | S/F | 0.01 | 分别 0.10、0.40 | 每档 2 | 每种子 8000 |
+| 误差敏感性 | S/F | 分别 0.005、0.02、0.05 | 0.20 | 每档 2 | 每种子 8000 |
+
+先验变化仍使用原 F 圆盘高斯与 S 匹配边缘，支持范围不变；没有把不同假设的候选混成一个分布。上述档位都是工作情景，不是题面给定或实测标定。
+
+每个前缀重新归一化，分别报告直接过平面与入框条件下的位置。格宽为原宽约 0.10167 m 的 0.5/1/2 倍；每种格宽比较不平移、只平移 y 半格、只平移 z 半格、同时平移半格，共 12 种格网。
+
+名义条件数值稳定需同时满足：各种子的原有采样/事件与 ESS 诊断、各格网最后一次样本加倍位移、同一种子不同格网的众数直径、同一格网跨种子的众数直径，后面三项均不超过既有 0.20 m 工作阈值。小预算失败不自动否定更大预算，最终主要查看最大预算；全部预算结果保留。均值/区域通过不替代众数检查，条件内总 ESS 不等于最高质量格的 ESS。
+
+假设稳健性另行判断：在相同 8000 次预算与名义格网上比较不同先验/误差；只有被比较目标各自通过数值检查，才支持把众数位移归因于假设变化。未通过时保留位移作描述，不视为已排除采样误差的物理结论。
+
+`--samples` 指实际提议数，须提供至少两档逐次加倍的偶数；`--seeds` 至少两个不同非负种子。`--sensitivity-samples` 须在采样量表中，`--sensitivity-seeds` 至少为 2；`--model S/F/both`、`--starts 1..9` 与 `--workers` 可调整。已有目录拒绝覆盖。小规模调试示例：
+
+```bash
+.venv/bin/python code/mode_stability.py --model S --samples 1000 2000 --sensitivity-samples 1000 --seeds 7 108 --workers 1 --output results/mode_debug
+```
+
+根目录的 `experiment_config.json` 在运行前保存矩阵、阈值、输入、版本及源码 SHA256。各任务目录保存 `run_config.json`、含 MAP/采样诊断/前缀/格网的 `summary.json`，以及完整候选和权重 `candidates.jsonl.gz`。所有任务完成后生成总 `summary.json` 与 `mode_metrics.csv`，`--plot` 另生成采样量、格网和假设敏感性三张图。独立进程使用独立目录，Windows 实机兼容性未验证。
+
+同一最大固定提议的前缀保证预算比较使用嵌套样本；相同整数种子下，新的 16000 次运行前缀不等同于旧版单独 4000 次运行的随机流。数值稳定不是校准覆盖率或真实定位精度，工作假设变化不是标准差。
+
+实际完整结果见 `results/mode_stability_example`，检查报告见 `reports/MODE_STABILITY_CHECK_REPORT.md`。26 次原有采样诊断通过，但名义 S/F 的完整众数稳定性检查均未通过；保留该标记继续开发数据区域检验，不把一次众数格或条件均值写成稳定峰值。
+
+## 使用 development_regions.py 检验开发数据区域
+
+此入口只读取 `observations/development.jsonl`；先用文件中前 20 条观测（当前为 5 个源射门的相关噪声副本）计时，然后沿用完全相同配置完成剩余观测。试跑结果直接保留，不重跑、不按效果调阈值。默认 4 个进程，S/F 各 N=2000、实际 4000 次提议，三个优化起点，固定 Cd=0.22；误差和已知环境读取各条公开观测，先验沿用共享默认值。
+
+Mac：
+
+```bash
+.venv/bin/python code/development_regions.py --output results/my_development_regions --plot
+```
+
+Windows PowerShell：
+
+```powershell
+.\.venv\Scripts\python.exe code\development_regions.py --output results\my_development_regions --plot
+```
+
+`--dataset` 指定数据集根目录；本入口没有 `--split`，明确拒绝非开发组记录。`--model` 可选 S/F/both，`--samples` 是基础 N，`--starts`、`--drag`、`--seed`、`--workers`、`--pilot-cases` 可显式设置；`--bootstrap` 默认 1000 次源级整组重采样。所有设置在运算前保存，已有结果目录拒绝覆盖。Windows 实机未验证。
+
+子进程只取得公开观测与推断设置，未取得数据集根目录或真值路径。各任务保存在 `cases/case_编号_模型/`，包含完整候选/真实权重 `candidates.jsonl.gz` 与参数拟合、采样诊断、概率预测和 MAP 对照的 `summary.json`。观测不可用或采样失败也保留记录；失败不会通过自动增加样本或放宽阈值来隐藏。
+
+根目录保存 `run_config.json`（设置、观测指纹、代码/版本）、`task_log.jsonl`（任务状态）、`pilot_timing.json`（计时和粗略预算）。全部 S/F 任务完成后，添加基于同一公开输入的 G/A 基线，以及从后验内部 MAP 取出的轨迹点对照；封存为 `predictions.jsonl` 和 `prediction_manifest.json`。完整性与指纹检查通过后才打开 `truth/development.jsonl`。校准集与测试集没有读取路径。
+
+`evaluation/` 中复用现有评价器保存 `summary.json`、`metrics.csv`、`per_case.csv` 和预测副本，另保存 `paired_regions.json`（F-S 的点误差、P90、覆盖、共同有效区域面积及失败率差的源级区间）和 `truth_provenance.json`。`--plot` 生成点比较、覆盖率/面积/状态及噪声分层三张图。根 `run_summary.json` 只在全部预测与评分完成后生成。
+
+主评分点是直接过门线条件均值，区域是未经校准的名义 90% 模型内椭圆；另保留 MAP/G/A 点对照，点基线的覆盖率为 null。所有真实直接过线案例进入覆盖分母，漏预测、失败和无效区域计漏覆盖；点误差与面积必须结合各自有效分母及配对结果解读。相关噪声副本按源射门整组重采样。
+
+这一步评价当前开发示例，不冻结模型、不拟合校准尺度，也不改变众数未稳定的结论。36 个开发源射门的模拟示例不能替代实测或最终独立测试。
+
+完整运行结果在 `results/development_regions`：288 个 S/F 任务、1088000 次提议和 864 条含点对照预测完成。名义90%区域覆盖 S 为50/112、F为106/112；F面积中位数更大、配对点误差差异未明确优于S。全部任务状态、候选和失败均保留，见 `reports/DEVELOPMENT_REGIONS_CHECK_REPORT.md`。
+
+## 诊断第1、2步：方向误差、同模型恢复与受控机制
+
+`model_diagnosis.py` 只诊断既有 development 结果，并生成新的受控 development 实验。默认30组、5机制、2噪声、S/F双模型，另有每模型30条匹配先验生成任务。每任务沿用三起点、实际4000提议和原诊断阈值。
+
+```bash
+.venv/bin/python code/model_diagnosis.py diagnose --output results/new_existing_diagnosis
+.venv/bin/python code/model_diagnosis.py prepare --output results/new_controlled_diagnosis
+.venv/bin/python code/model_diagnosis.py recovery --output results/new_controlled_diagnosis
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python code/model_diagnosis.py run --output results/new_controlled_diagnosis --workers 6
+```
+
+输出目录创建时拒绝覆盖。`run` 可复用已经完整保存的任务 summary；中途仅有目录却没有完整summary的任务需人工核查后用新目录重跑，不自动删除。生成真值单独保存，预测worker仅接收公开观测；完整预测保存并封存之后才汇总评分。共享参数默认值未调整。
+
+无噪声恢复使用纯LS，sigma=0.01只是目标函数缩放。初次sigma=1e-4暴露SLSQP尺度敏感性，原始记录单独保留；不能把优化器success当作足够的恢复证据。报告见 `reports/MODEL_DIAGNOSIS_REPORT.md`，图表及逐案例记录见 `results/model_diagnosis_existing/`、`results/controlled_diagnosis/`。
+
+## 第一轮修订：数值认证、分项输出与有限先验比较
+
+`inverse.fit_case` 现在对完整LS/MAP目标统一乘以 `mean(diag(Sigma))/0.01**2`，保持似然与先验比例，返回的objective/data_chi_square仍为原始定义。每起点同时检查可行性与约束KKT残差（缩放坐标下阈值2e-4，活跃约束容差1e-5）。`optimizer_success`不再充分决定是否接受；记录`optimality_certified`、`optimality_residual`和`objective_multiplier`。认证不证明全局唯一或真实预测精度。
+
+`uncertainty.sample_case` 的 `output_validity` 分别记录事件概率、直接过线条件均值和区域的认证。`success`仍保留联合诊断语义。公共预测`status=ok`现在表示至少有一项正式输出可用，调用者必须检查对应字段是否为None；缺失区域仍按漏覆盖评价。未知事件概率质量保留，不能当作先接地或删除；存在未决质量时不发布精确入框概率。原有众数稳定性检查独立保留。
+
+`UncertaintySettings.max_sample_doublings`默认0以兼容固定4000次预算；本轮修订实验显式设2，按4000→8000→16000追加同一固定提议分布的候选。已有候选不替换，全部权重重新归一化，`sampling_stages`记录每档诊断；达到原联合标准即停止，阈值不放宽。
+
+`InferenceSettings.vertical_force_prior_std`控制by（主要产生竖向力），`side_force_prior_std`控制bz（主要产生侧向力）；None沿用原共享尺度。F使用同一圆盘内分方向高斯，S使用它的bz边缘，截断积分使用by尺度。所有模型默认仍为原0.20/0.20，不自动用开发结果改写默认值。
+
+```bash
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python code/first_revision.py validation --output results/first_revision_validation --workers 6
+.venv/bin/python code/first_revision_report.py validation
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 .venv/bin/python code/first_revision.py priors --output results/first_revision_priors --workers 6
+.venv/bin/python code/first_revision_report.py priors
+```
+
+首次输出目录拒绝覆盖。已完整任务可用`--resume`复用；候选、每阶段诊断、预测封存和真值指纹均保存。validation仅使用此前受控实验的60个匹配先验公开输入；priors仅使用原development输入，比较原F0与by=0.10/0.05两个候选（bz均0.20）。预测worker不取得真值，完整预测封存后才评分；此次属于已使用开发数据上的修订验证，不属于独立测试。

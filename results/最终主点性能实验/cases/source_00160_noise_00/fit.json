@@ -1,0 +1,256 @@
+{
+  "model": "F",
+  "mode": "map",
+  "drag_coefficient": 0.22,
+  "parameter_names": [
+    "vx0",
+    "vy0",
+    "vz0",
+    "b_y",
+    "b_z"
+  ],
+  "parameter_scales": [
+    34.32155315630764,
+    34.32155315630764,
+    34.32155315630764,
+    0.1,
+    0.2
+  ],
+  "observation_covariance_m2": [
+    [
+      2.5e-05,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      2.5e-05,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      2.5e-05,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      2.5e-05,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      2.5e-05,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      2.5e-05
+    ]
+  ],
+  "optimizer_runs": [
+    {
+      "start": 0,
+      "success": true,
+      "optimizer_success": true,
+      "message": "Optimization terminated successfully",
+      "iterations": 11,
+      "objective": 2.6292900044998557,
+      "objective_multiplier": 0.25,
+      "feasible": true,
+      "optimality_residual": 9.063361172669632e-06,
+      "optimality_certified": true,
+      "parameters": {
+        "initial_velocity_m_s": [
+          34.4499882664524,
+          4.674502670780476,
+          3.534612800613736
+        ],
+        "drag_coefficient": 0.22,
+        "b_y": -0.04935176390022655,
+        "b_z": -0.1451343574260669
+      }
+    },
+    {
+      "start": 1,
+      "success": true,
+      "optimizer_success": true,
+      "message": "Optimization terminated successfully",
+      "iterations": 11,
+      "objective": 2.629290004499931,
+      "objective_multiplier": 0.25,
+      "feasible": true,
+      "optimality_residual": 4.19250745231217e-06,
+      "optimality_certified": true,
+      "parameters": {
+        "initial_velocity_m_s": [
+          34.449988264225375,
+          4.674502668095838,
+          3.5346127994048646
+        ],
+        "drag_coefficient": 0.22,
+        "b_y": -0.049351763823633765,
+        "b_z": -0.14513435606818212
+      }
+    },
+    {
+      "start": 2,
+      "success": true,
+      "optimizer_success": true,
+      "message": "Optimization terminated successfully",
+      "iterations": 14,
+      "objective": 2.629290004499821,
+      "objective_multiplier": 0.25,
+      "feasible": true,
+      "optimality_residual": 1.3441010301128955e-05,
+      "optimality_certified": true,
+      "parameters": {
+        "initial_velocity_m_s": [
+          34.44998826167486,
+          4.674502671983665,
+          3.5346127948605464
+        ],
+        "drag_coefficient": 0.22,
+        "b_y": -0.04935176560544624,
+        "b_z": -0.14513435743977446
+      }
+    }
+  ],
+  "prior_definition": "F_disk_gaussian__S_matching_marginal",
+  "success": true,
+  "parameters": {
+    "initial_velocity_m_s": [
+      34.44998826167486,
+      4.674502671983665,
+      3.5346127948605464
+    ],
+    "drag_coefficient": 0.22,
+    "b_y": -0.04935176560544624,
+    "b_z": -0.14513435743977446
+  },
+  "simulation": {
+    "times_s": [
+      0.05,
+      0.1
+    ],
+    "positions_m": [
+      [
+        1.7062884117794372,
+        0.2200231189150614,
+        0.27663368027555507
+      ],
+      [
+        3.38086309676565,
+        0.4136642653524509,
+        0.42318388604816753
+      ]
+    ],
+    "event": "goal",
+    "event_time_s": 0.3397252465788353,
+    "event_position_m": [
+      11.000000000000002,
+      1.0184102336613183,
+      0.8517930817097288
+    ],
+    "message": "首次正向过门线；入框需另检查 y/z。"
+  },
+  "objective": 2.629290004499821,
+  "data_chi_square": 4.488420789425746,
+  "prior_penalty": 0.385079609786948,
+  "residuals_m": [
+    [
+      0.009115003545510314,
+      -6.929774324515581e-05,
+      0.0024535723208216065
+    ],
+    [
+      -0.0046399326327333235,
+      6.0108898957134116e-05,
+      -0.0012529257257394844
+    ]
+  ],
+  "rms_residual_m": 0.004324552380220863,
+  "diagnostics": {
+    "data_jacobian_scaled": [
+      [
+        336.6414860643387,
+        1.8386500610904564,
+        -1.073353677050609,
+        0.15769992645060288,
+        -0.3965941797208502
+      ],
+      [
+        -4.867530834494518,
+        339.4013378745722,
+        -0.2516492464411523,
+        -0.000731422700183494,
+        3.13055576102487
+      ],
+      [
+        1.1782510349076323,
+        0.058965671789697895,
+        339.8039213377209,
+        -1.564139259223153,
+        -0.0006086930959298077
+      ],
+      [
+        660.5212378359062,
+        7.205116956391932,
+        -4.149580923319905,
+        0.6067413460536002,
+        -1.4478419840879109
+      ],
+      [
+        -18.914827905625753,
+        671.3747449409393,
+        -0.9094885317088215,
+        -0.005821506054986832,
+        12.281757587107418
+      ],
+      [
+        4.633826613849526,
+        0.24634099371454232,
+        672.9579884370673,
+        -6.132381869521892,
+        -0.004483238780237794
+      ]
+    ],
+    "data_jacobian_rank": 5,
+    "data_jacobian_singular_values": [
+      755.2398096295533,
+      753.7716477510335,
+      738.922320319893,
+      2.757753511582277,
+      1.3744232525548148
+    ],
+    "data_jacobian_condition": 549.4958035857537,
+    "boundary_hits": [],
+    "converged_start_count": 3,
+    "optimality_certified": true,
+    "objective_multiplier": 0.25,
+    "optimality_residual": 1.3441010301128955e-05
+  },
+  "message": "观测窗反演收敛；最终事件和预测能力须分别检查。",
+  "forward_calls": 426,
+  "incompatible_calls": 6,
+  "numerical_failure_calls": 0,
+  "wall_time_s": 0.25431633300468093
+}

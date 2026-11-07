@@ -1,0 +1,126 @@
+{
+  "date": "2026-11-08 Asia/Shanghai",
+  "model": {
+    "model": "F",
+    "b_y_prior_std": 0.1,
+    "b_z_prior_std": 0.2,
+    "drag_coefficient": 0.22,
+    "sigma_m": 0.01,
+    "time_q_s": 0.015188910308210842,
+    "spatial_threshold": 3.083525450931334,
+    "mode_bandwidth_m": 0.1,
+    "smooth_mode_yz_m": [
+      2.875,
+      1.925
+    ],
+    "raw_grid_mode_yz_m": [
+      2.8975,
+      1.8808
+    ],
+    "mean_auxiliary_yz_m": [
+      2.9057531544942057,
+      1.9285065612977923
+    ],
+    "case_seed": 20261109,
+    "base_samples": 2000,
+    "total_proposals": 4000,
+    "mode_seed_count": 4
+  },
+  "inference": {
+    "position_sigma_m": 0.01,
+    "rounding_half_width_m": 0.005,
+    "fixed_drag_coefficient": 0.22,
+    "drag_bounds": [
+      0.08,
+      0.55
+    ],
+    "drag_prior_mean": 0.22,
+    "drag_prior_std": 0.1,
+    "transverse_prior_std": 0.2,
+    "vertical_force_prior_std": 0.1,
+    "side_force_prior_std": 0.2,
+    "transverse_norm_max": 0.5,
+    "vx_bounds_m_s": [
+      0.0,
+      60.0
+    ],
+    "vy_bounds_m_s": [
+      -30.0,
+      30.0
+    ],
+    "vz_bounds_m_s": [
+      0.0,
+      30.0
+    ],
+    "max_iterations_per_start": 100,
+    "prediction_region_mass": 0.9
+  },
+  "solver": {
+    "method": "RK45",
+    "relative_tolerance": 1e-07,
+    "position_absolute_tolerance_m": 1e-09,
+    "velocity_absolute_tolerance_m_s": 1e-09,
+    "max_step_s": 0.01,
+    "initial_horizon_s": 2.0,
+    "maximum_horizon_s": 4.0,
+    "event_time_tolerance_s": 1e-07
+  },
+  "uncertainty": {
+    "base_samples": 2000,
+    "min_effective_samples": 300.0,
+    "min_conditional_effective_samples": 100.0,
+    "event_probability_tolerance": 0.02,
+    "mean_shift_tolerance_m": 0.05,
+    "relative_area_tolerance": 0.15,
+    "unknown_mass_tolerance": 1e-06,
+    "grid_width_m": 0.10166666666666667,
+    "mode_shift_tolerance_m": 0.2,
+    "student_df": 5.0,
+    "broad_component_weight": 0.15,
+    "broad_standard_deviation_factor": 3.0,
+    "max_sample_doublings": 0
+  },
+  "observation_sha256": "d4ef6c4418365d77096fe8165acd1d5ef1c9b5dcef2f6bd47b32ee3b04b6c4a1",
+  "source_sha256": {
+    "final_point_evaluation.py": "28b167dbd4091dded4a016c8441b9a65b15fa85151b1f7c6f297ce1eba00c06f",
+    "batch_f_sampler.py": "3738c5b55f987f78a20fe5ee45ef3fdd894e8ec76596457b238755607d57b4e7",
+    "batch_f_dynamics.c": "2f382732f9a5fbd361b3ed2c7cd4ff352a2fae2976a125ca0c4fa5ce9dc7df93",
+    "config.py": "9cb26247ebc0a9a403cd220bfd13719d41dccebf70c95e7a6ad38e635d08ac0c",
+    "final_config.py": "6ce392074cbf9927d5bc785ae4deecab4e3548f2e0d8fa7b59ffe8e1ef164bb9",
+    "physics.py": "246aaf3bfca55b82133e07c4fbe9be92ab7c4aaed75bd00c1f2b18328ae2c1ec",
+    "inverse.py": "16c93d9f3359434444ca5c2d1f7ffa6d9d672fbf8bbc0e06956507f8d37a5f03",
+    "uncertainty.py": "8498b2b991f0f3a8e9255b69e9cba374694c210245810088f3c3f778de047121",
+    "data.py": "01e68184af094954e7575a0262b69938b0229e4a6c374dfd5b15d426302f76cf"
+  },
+  "proposals_per_seed": 64000,
+  "seed_offsets": [
+    0,
+    101,
+    202,
+    303
+  ],
+  "comparison_prefix": 32000,
+  "bandwidths_m": [
+    0.05,
+    0.1,
+    0.2
+  ],
+  "main_bandwidth_m": 0.1,
+  "peak_tolerance_m": 0.2,
+  "resolution_m": 0.01,
+  "batch_step_s": 0.005,
+  "search_window": "inside: goal bounds plus 0.60m; direct: predicted mean +/-6std plus 0.60m",
+  "scope": "Existing test data, frozen-method supplementary evaluation; not a new blind test.",
+  "pilot_source_sha256": {
+    "final_point_evaluation.py": "c96c853f0ed90fb4d7932ff57d1aac58451be5150469b0605c2f5a5f51e1af5e",
+    "batch_f_sampler.py": "3738c5b55f987f78a20fe5ee45ef3fdd894e8ec76596457b238755607d57b4e7",
+    "batch_f_dynamics.c": "2f382732f9a5fbd361b3ed2c7cd4ff352a2fae2976a125ca0c4fa5ce9dc7df93",
+    "config.py": "9cb26247ebc0a9a403cd220bfd13719d41dccebf70c95e7a6ad38e635d08ac0c",
+    "final_config.py": "6ce392074cbf9927d5bc785ae4deecab4e3548f2e0d8fa7b59ffe8e1ef164bb9",
+    "physics.py": "246aaf3bfca55b82133e07c4fbe9be92ab7c4aaed75bd00c1f2b18328ae2c1ec",
+    "inverse.py": "16c93d9f3359434444ca5c2d1f7ffa6d9d672fbf8bbc0e06956507f8d37a5f03",
+    "uncertainty.py": "8498b2b991f0f3a8e9255b69e9cba374694c210245810088f3c3f778de047121",
+    "data.py": "01e68184af094954e7575a0262b69938b0229e4a6c374dfd5b15d426302f76cf"
+  },
+  "pilot_note": "Five public-input cases timed before full run; final change adds scoring/report code only, prediction and stability logic unchanged."
+}

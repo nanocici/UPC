@@ -17,7 +17,7 @@ from pathlib import Path
 
 import numpy as np
 import scipy
-from scipy.optimize import minimize
+from scipy.optimize import minimize, nnls
 from scipy.special import erf
 
 from config import (CASE, ENVIRONMENT, INFERENCE, SOLVER, DATA_DIR, RESULTS_DIR,
@@ -50,7 +50,7 @@ def observation_covariance(case, sigma_m=None, frame_correlation=0.0, covariance
 def transverse_prior_penalty(model, transverse, settings=INFERENCE):
     """负对数先验相对各自零点的增量；不用于计算模型证据。
 
-    F 是圆盘截断的二维各向同性高斯；S 用其 b_z 边缘先验，
+    F 是圆盘截断的二维高斯（支持分方向尺度）；S 用其 b_z 边缘先验，
     而不是条件于 b_y=0 的一维截断高斯。
     """
     transverse = np.asarray(transverse, dtype=float)
@@ -58,14 +58,19 @@ def transverse_prior_penalty(model, transverse, settings=INFERENCE):
     if model not in ("S", "F") or transverse.shape != expected or not np.all(np.isfinite(transverse)):
         raise ValueError("横向参数形状或模型不符。")
     radius, scale = settings.transverse_norm_max, settings.transverse_prior_std
+    sy = settings.vertical_force_prior_std if settings.vertical_force_prior_std is not None else scale
+    sz = settings.side_force_prior_std if settings.side_force_prior_std is not None else scale
+    if not all(isfinite(v) and v > 0 for v in (sy, sz)):
+        raise ValueError("分方向先验尺度须有限且为正。")
     norm = float(np.linalg.norm(transverse))
     if norm > radius or (model == "S" and norm >= radius):
         return float("inf")
-    penalty = .5*float(np.dot(transverse, transverse))/scale**2
+    axis_scales = np.array([sy, sz] if model == "F" else [sz])
+    penalty = .5*float(np.sum((transverse/axis_scales)**2))
     if model == "S":
         width = sqrt(max(0.0, radius**2-transverse[0]**2))
         # 常数选择使零点罚项为 0；它不改变该模型中的 MAP。
-        penalty += np.log(erf(radius/(sqrt(2)*scale)))-np.log(erf(width/(sqrt(2)*scale)))
+        penalty += np.log(erf(radius/(sqrt(2)*sy)))-np.log(erf(width/(sqrt(2)*sy)))
     return float(penalty)
 
 
@@ -139,7 +144,11 @@ def fit_case(
     # S 的边缘先验在端点为零；留极小数值余量，避免 log(0)。
     b_limit = radius*(1-1e-8) if model == "S" else radius
     bounds += [(-b_limit, b_limit)]*(len(names)-3)
-    scales = np.array([max(1.0, np.linalg.norm(velocity_guess))]*3+[bscale]*(len(names)-3))
+    sy = settings.vertical_force_prior_std if settings.vertical_force_prior_std is not None else bscale
+    sz = settings.side_force_prior_std if settings.side_force_prior_std is not None else bscale
+    if not all(isfinite(v) and v > 0 for v in (sy, sz)):
+        raise ValueError("分方向先验尺度须有限且为正。")
+    scales = np.array([max(1.0, np.linalg.norm(velocity_guess))]*3+([sy, sz] if model == "F" else [sz]))
     scaled_bounds = [(lo/s, hi/s) for (lo, hi), s in zip(bounds, scales)]
     elapsed = case.times_s[-1]-case.initial_time_s
     duration = float(np.nextafter(elapsed, np.inf))
@@ -178,16 +187,39 @@ def fit_case(
         prior = transverse_prior_penalty(model, (q*scales)[3:], settings) if mode == "map" else 0.0
         return .5*float(np.dot(r, r))+prior if isfinite(prior) else 1e12
 
+    objective_multiplier = float(np.mean(np.diag(covariance))/.01**2)
+
+    def scaled_objective(q):
+        return objective_multiplier*objective(q)
+
     def gradient(q):
         # 对目标作固定尺度的差分，避免零横向初值使用过小差分步长。
-        base = np.array([objective(q)])
-        jac = _finite_jacobian(lambda z: np.array([objective(z)]), q, scaled_bounds, base)
+        base = np.array([scaled_objective(q)])
+        jac = _finite_jacobian(lambda z: np.array([scaled_objective(z)]), q, scaled_bounds, base)
         return jac[0] if jac is not None else np.zeros_like(q)
 
     constraints = []
     if model == "F":
-        constraints = [{"type": "ineq", "fun": lambda q: 1-np.sum((q[3:]*bscale/radius)**2),
-                        "jac": lambda q: np.r_[np.zeros(3), -2*q[3:]*(bscale/radius)**2]}]
+        constraints = [{"type": "ineq", "fun": lambda q: 1-np.sum((q[3:]*scales[3:]/radius)**2),
+                        "jac": lambda q: np.r_[np.zeros(3), -2*q[3:]*(scales[3:]/radius)**2]}]
+    def certify(q):
+        # KKT: grad J = sum(lambda_i * grad g_i), g_i >= 0, lambda_i >= 0.
+        g = gradient(q)
+        normals = []
+        for j, (lo, hi) in enumerate(scaled_bounds):
+            e = np.eye(len(q))[j]
+            if q[j]-lo <= 1e-5: normals.append(e)
+            if hi-q[j] <= 1e-5: normals.append(-e)
+        if model == "F" and constraints[0]['fun'](q) <= 1e-5:
+            normals.append(constraints[0]['jac'](q))
+        residual_gradient = g.copy()
+        if normals:
+            matrix = np.asarray(normals).T
+            multipliers, _ = nnls(matrix, g)
+            residual_gradient -= matrix@multipliers
+        error = float(np.linalg.norm(residual_gradient, ord=np.inf))
+        return error, bool(np.all(np.isfinite(g)) and error <= 2e-4)
+
     lower = np.array([b[0] for b in bounds])
     upper = np.array([b[1] for b in bounds])
     if initial_guesses is None:
@@ -217,18 +249,21 @@ def fit_case(
         else:
             runs.append({"start": index, "success": False, "message": "无法构造观测窗相容初值。"})
             continue
-        optimized = minimize(objective, q0, method="SLSQP", jac=gradient,
+        optimized = minimize(scaled_objective, q0, method="SLSQP", jac=gradient,
             bounds=scaled_bounds, constraints=constraints,
-            options={"maxiter": settings.max_iterations_per_start, "ftol": 1e-9})
+            options={"maxiter": settings.max_iterations_per_start, "ftol": 1e-12})
         vector = optimized.x*scales
         r = residual(optimized.x)
         feasible = (r is not None and np.all(vector >= lower-1e-8)
                     and np.all(vector <= upper+1e-8) and np.linalg.norm(vector[3:]) <= radius+1e-8
                     and isfinite(objective(optimized.x)) and objective(optimized.x) < 1e11)
-        successful = bool(optimized.success and feasible)
+        optimality_error, certified = certify(optimized.x) if feasible else (None, False)
+        successful = bool(optimized.success and feasible and certified)
         runs.append({"start": index, "success": successful, "optimizer_success": bool(optimized.success),
                      "message": str(optimized.message), "iterations": int(optimized.nit),
                      "objective": float(objective(optimized.x)),
+                     "objective_multiplier": objective_multiplier, "feasible": bool(feasible),
+                     "optimality_residual": optimality_error, "optimality_certified": certified,
                      "parameters": _parameter_dict(model, vector, cd)})
         if successful:
             accepted.append((float(objective(optimized.x)), optimized.x.copy()))
@@ -249,7 +284,9 @@ def fit_case(
         jacobian = _finite_jacobian(residual, q, scaled_bounds, r)
         diagnostics = {"data_jacobian_scaled": None, "data_jacobian_rank": None,
                        "data_jacobian_singular_values": None, "data_jacobian_condition": None,
-                       "boundary_hits": [], "converged_start_count": len(accepted)}
+                       "boundary_hits": [], "converged_start_count": len(accepted),
+                       "optimality_certified": True, "objective_multiplier": objective_multiplier,
+                       "optimality_residual": certify(q)[0]}
         if jacobian is not None:
             singular = np.linalg.svd(jacobian, compute_uv=False)
             diagnostics.update(data_jacobian_scaled=jacobian.tolist(),

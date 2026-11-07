@@ -1,0 +1,540 @@
+{
+  "case_id": "source_00102_noise_03",
+  "source_id": "source_00102",
+  "sigma_m": 0.05,
+  "observation_available": true,
+  "status": "computed",
+  "conditions": {
+    "direct_crossing": {
+      "stable": true,
+      "reasons": [],
+      "raw_peak": [
+        1.4050000000000002,
+        2.065
+      ],
+      "point_yz_m": [
+        1.4050000000000002,
+        2.065
+      ],
+      "cross_seed_diameter_m": 0.08000000000000007,
+      "last_doubling_shift_m": 0.03162277660168368,
+      "search_bounds": [
+        [
+          -1.94,
+          4.82
+        ],
+        [
+          -0.19,
+          4.34
+        ]
+      ],
+      "combined_peaks": {
+        "0.05": {
+          "point_yz_m": [
+            1.3850000000000002,
+            2.075
+          ],
+          "boundary": false,
+          "window_mass": 0.9999999999999999
+        },
+        "0.1": {
+          "point_yz_m": [
+            1.4050000000000002,
+            2.065
+          ],
+          "boundary": false,
+          "window_mass": 0.9999999999999751
+        },
+        "0.2": {
+          "point_yz_m": [
+            1.415,
+            2.065
+          ],
+          "boundary": false,
+          "window_mass": 0.9999999999519733
+        }
+      },
+      "per_seed_peaks": [
+        {
+          "seed_index": 0,
+          "proposals": 32000,
+          "bandwidth_m": 0.1,
+          "point_yz_m": [
+            1.4650000000000003,
+            2.075
+          ],
+          "boundary": false,
+          "window_mass": 1.0
+        },
+        {
+          "seed_index": 0,
+          "proposals": 64000,
+          "bandwidth_m": 0.05,
+          "point_yz_m": [
+            1.5050000000000003,
+            2.065
+          ],
+          "boundary": false,
+          "window_mass": 1.0000000000000002
+        },
+        {
+          "seed_index": 0,
+          "proposals": 64000,
+          "bandwidth_m": 0.1,
+          "point_yz_m": [
+            1.4450000000000003,
+            2.065
+          ],
+          "boundary": false,
+          "window_mass": 0.9999999999999993
+        },
+        {
+          "seed_index": 0,
+          "proposals": 64000,
+          "bandwidth_m": 0.2,
+          "point_yz_m": [
+            1.4250000000000003,
+            2.065
+          ],
+          "boundary": false,
+          "window_mass": 0.9999999999764194
+        },
+        {
+          "seed_index": 1,
+          "proposals": 32000,
+          "bandwidth_m": 0.1,
+          "point_yz_m": [
+            1.435,
+            2.075
+          ],
+          "boundary": false,
+          "window_mass": 0.9999999999999891
+        },
+        {
+          "seed_index": 1,
+          "proposals": 64000,
+          "bandwidth_m": 0.05,
+          "point_yz_m": [
+            1.3850000000000002,
+            2.035
+          ],
+          "boundary": false,
+          "window_mass": 1.0000000000000002
+        },
+        {
+          "seed_index": 1,
+          "proposals": 64000,
+          "bandwidth_m": 0.1,
+          "point_yz_m": [
+            1.4050000000000002,
+            2.065
+          ],
+          "boundary": false,
+          "window_mass": 0.9999999999999044
+        },
+        {
+          "seed_index": 1,
+          "proposals": 64000,
+          "bandwidth_m": 0.2,
+          "point_yz_m": [
+            1.415,
+            2.065
+          ],
+          "boundary": false,
+          "window_mass": 0.999999999930296
+        },
+        {
+          "seed_index": 2,
+          "proposals": 32000,
+          "bandwidth_m": 0.1,
+          "point_yz_m": [
+            1.3850000000000002,
+            2.065
+          ],
+          "boundary": false,
+          "window_mass": 0.9999999999999982
+        },
+        {
+          "seed_index": 2,
+          "proposals": 64000,
+          "bandwidth_m": 0.05,
+          "point_yz_m": [
+            1.3850000000000002,
+            2.075
+          ],
+          "boundary": false,
+          "window_mass": 0.9999999999999993
+        },
+        {
+          "seed_index": 2,
+          "proposals": 64000,
+          "bandwidth_m": 0.1,
+          "point_yz_m": [
+            1.3650000000000002,
+            2.065
+          ],
+          "boundary": false,
+          "window_mass": 0.999999999999997
+        },
+        {
+          "seed_index": 2,
+          "proposals": 64000,
+          "bandwidth_m": 0.2,
+          "point_yz_m": [
+            1.4050000000000002,
+            2.065
+          ],
+          "boundary": false,
+          "window_mass": 0.9999999999581526
+        },
+        {
+          "seed_index": 3,
+          "proposals": 32000,
+          "bandwidth_m": 0.1,
+          "point_yz_m": [
+            1.4250000000000003,
+            2.065
+          ],
+          "boundary": false,
+          "window_mass": 0.9999999999999997
+        },
+        {
+          "seed_index": 3,
+          "proposals": 64000,
+          "bandwidth_m": 0.05,
+          "point_yz_m": [
+            1.315,
+            2.075
+          ],
+          "boundary": false,
+          "window_mass": 1.0
+        },
+        {
+          "seed_index": 3,
+          "proposals": 64000,
+          "bandwidth_m": 0.1,
+          "point_yz_m": [
+            1.4050000000000002,
+            2.075
+          ],
+          "boundary": false,
+          "window_mass": 0.9999999999999993
+        },
+        {
+          "seed_index": 3,
+          "proposals": 64000,
+          "bandwidth_m": 0.2,
+          "point_yz_m": [
+            1.415,
+            2.065
+          ],
+          "boundary": false,
+          "window_mass": 0.9999999999430249
+        }
+      ],
+      "competing_peak_count": 1,
+      "raw_grid": {
+        "cross_seed_m": 0.10166666666666746,
+        "within_seed_max_m": 0.2897945872126983,
+        "pass_": false
+      },
+      "mean_auxiliary": [
+        1.4385716427372834,
+        2.0754663529122555
+      ]
+    },
+    "inside_conditioned": {
+      "stable": true,
+      "reasons": [],
+      "raw_peak": [
+        1.4050000000000002,
+        2.065
+      ],
+      "point_yz_m": [
+        1.4050000000000002,
+        2.065
+      ],
+      "cross_seed_diameter_m": 0.08000000000000007,
+      "last_doubling_shift_m": 0.031622776601684104,
+      "search_bounds": [
+        [
+          -4.26,
+          4.26
+        ],
+        [
+          -0.6,
+          3.04
+        ]
+      ],
+      "combined_peaks": {
+        "0.05": {
+          "point_yz_m": [
+            1.3850000000000007,
+            2.075
+          ],
+          "boundary": false,
+          "window_mass": 1.0000000000000002
+        },
+        "0.1": {
+          "point_yz_m": [
+            1.4050000000000002,
+            2.065
+          ],
+          "boundary": false,
+          "window_mass": 0.9999999999999999
+        },
+        "0.2": {
+          "point_yz_m": [
+            1.415,
+            2.055
+          ],
+          "boundary": false,
+          "window_mass": 0.9999444465465482
+        }
+      },
+      "per_seed_peaks": [
+        {
+          "seed_index": 0,
+          "proposals": 32000,
+          "bandwidth_m": 0.1,
+          "point_yz_m": [
+            1.4650000000000007,
+            2.075
+          ],
+          "boundary": false,
+          "window_mass": 1.0
+        },
+        {
+          "seed_index": 0,
+          "proposals": 64000,
+          "bandwidth_m": 0.05,
+          "point_yz_m": [
+            1.505,
+            2.065
+          ],
+          "boundary": false,
+          "window_mass": 1.0000000000000002
+        },
+        {
+          "seed_index": 0,
+          "proposals": 64000,
+          "bandwidth_m": 0.1,
+          "point_yz_m": [
+            1.4450000000000003,
+            2.065
+          ],
+          "boundary": false,
+          "window_mass": 1.0
+        },
+        {
+          "seed_index": 0,
+          "proposals": 64000,
+          "bandwidth_m": 0.2,
+          "point_yz_m": [
+            1.4250000000000007,
+            2.055
+          ],
+          "boundary": false,
+          "window_mass": 0.9999442508057527
+        },
+        {
+          "seed_index": 1,
+          "proposals": 32000,
+          "bandwidth_m": 0.1,
+          "point_yz_m": [
+            1.4350000000000005,
+            2.075
+          ],
+          "boundary": false,
+          "window_mass": 1.0
+        },
+        {
+          "seed_index": 1,
+          "proposals": 64000,
+          "bandwidth_m": 0.05,
+          "point_yz_m": [
+            1.3850000000000007,
+            2.035
+          ],
+          "boundary": false,
+          "window_mass": 1.0000000000000002
+        },
+        {
+          "seed_index": 1,
+          "proposals": 64000,
+          "bandwidth_m": 0.1,
+          "point_yz_m": [
+            1.4050000000000002,
+            2.065
+          ],
+          "boundary": false,
+          "window_mass": 0.9999999999999997
+        },
+        {
+          "seed_index": 1,
+          "proposals": 64000,
+          "bandwidth_m": 0.2,
+          "point_yz_m": [
+            1.415,
+            2.055
+          ],
+          "boundary": false,
+          "window_mass": 0.9999453405071654
+        },
+        {
+          "seed_index": 2,
+          "proposals": 32000,
+          "bandwidth_m": 0.1,
+          "point_yz_m": [
+            1.3850000000000007,
+            2.065
+          ],
+          "boundary": false,
+          "window_mass": 0.9999999999999999
+        },
+        {
+          "seed_index": 2,
+          "proposals": 64000,
+          "bandwidth_m": 0.05,
+          "point_yz_m": [
+            1.3850000000000007,
+            2.075
+          ],
+          "boundary": false,
+          "window_mass": 1.0000000000000002
+        },
+        {
+          "seed_index": 2,
+          "proposals": 64000,
+          "bandwidth_m": 0.1,
+          "point_yz_m": [
+            1.3650000000000002,
+            2.065
+          ],
+          "boundary": false,
+          "window_mass": 0.9999999999999999
+        },
+        {
+          "seed_index": 2,
+          "proposals": 64000,
+          "bandwidth_m": 0.2,
+          "point_yz_m": [
+            1.3950000000000005,
+            2.055
+          ],
+          "boundary": false,
+          "window_mass": 0.9999449442440399
+        },
+        {
+          "seed_index": 3,
+          "proposals": 32000,
+          "bandwidth_m": 0.1,
+          "point_yz_m": [
+            1.4250000000000007,
+            2.065
+          ],
+          "boundary": false,
+          "window_mass": 0.9999999999999997
+        },
+        {
+          "seed_index": 3,
+          "proposals": 64000,
+          "bandwidth_m": 0.05,
+          "point_yz_m": [
+            1.3150000000000004,
+            2.075
+          ],
+          "boundary": false,
+          "window_mass": 1.0000000000000004
+        },
+        {
+          "seed_index": 3,
+          "proposals": 64000,
+          "bandwidth_m": 0.1,
+          "point_yz_m": [
+            1.4050000000000002,
+            2.075
+          ],
+          "boundary": false,
+          "window_mass": 1.0
+        },
+        {
+          "seed_index": 3,
+          "proposals": 64000,
+          "bandwidth_m": 0.2,
+          "point_yz_m": [
+            1.415,
+            2.055
+          ],
+          "boundary": false,
+          "window_mass": 0.9999432506292358
+        }
+      ],
+      "competing_peak_count": 1,
+      "raw_grid": {
+        "cross_seed_m": 0.10166666666666746,
+        "within_seed_max_m": 0.2897945872126983,
+        "pass_": false
+      },
+      "mean_auxiliary": [
+        1.434703819166777,
+        2.0236014123941155
+      ]
+    }
+  },
+  "region": {
+    "center_yz_m": [
+      1.43857164273729,
+      2.075466352912265
+    ],
+    "covariance_m2": [
+      [
+        0.21202619992961794,
+        0.004555606223044776
+      ],
+      [
+        0.004555606223044775,
+        0.07625948735081185
+      ]
+    ],
+    "internal_threshold": 4.586642850016365,
+    "threshold": 3.083525450931334,
+    "area_m2": 1.2310061418063407
+  },
+  "g_point": [
+    1.5374107593979254,
+    2.171858386882668
+  ],
+  "g_event": "goal",
+  "seeds": [
+    3633402191,
+    3633402292,
+    3633402393,
+    3633402494
+  ],
+  "proposal_count": 256000,
+  "seed_diagnostics": [
+    {
+      "success": true,
+      "effective_samples": 43652.52422924228,
+      "unknown_mass": 0.0
+    },
+    {
+      "success": true,
+      "effective_samples": 43692.33342771167,
+      "unknown_mass": 0.0
+    },
+    {
+      "success": true,
+      "effective_samples": 43616.43410814369,
+      "unknown_mass": 0.0
+    },
+    {
+      "success": true,
+      "effective_samples": 43526.98678607933,
+      "unknown_mass": 0.0
+    }
+  ],
+  "inside_probability": 0.9054850593352806,
+  "wall_s": 5.6329906250030035
+}

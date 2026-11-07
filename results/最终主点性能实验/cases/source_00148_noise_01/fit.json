@@ -1,0 +1,152 @@
+{
+  "model": "F",
+  "mode": "map",
+  "drag_coefficient": 0.22,
+  "parameter_names": [
+    "vx0",
+    "vy0",
+    "vz0",
+    "b_y",
+    "b_z"
+  ],
+  "parameter_scales": [
+    32.67562810584036,
+    32.67562810584036,
+    32.67562810584036,
+    0.1,
+    0.2
+  ],
+  "observation_covariance_m2": [
+    [
+      0.0001,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0001,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0001,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0001,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0001,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0001
+    ]
+  ],
+  "optimizer_runs": [
+    {
+      "start": 0,
+      "success": false,
+      "optimizer_success": false,
+      "message": "Inequality constraints incompatible",
+      "iterations": 21,
+      "objective": 1.3756551377026547,
+      "objective_multiplier": 1.0,
+      "feasible": true,
+      "optimality_residual": 4.9999999999933224e+16,
+      "optimality_certified": false,
+      "parameters": {
+        "initial_velocity_m_s": [
+          33.227881089519705,
+          -1.0990283637274265,
+          0.6476849863373106
+        ],
+        "drag_coefficient": 0.22,
+        "b_y": 0.05348717636967631,
+        "b_z": -0.14811884625539898
+      }
+    },
+    {
+      "start": 1,
+      "success": false,
+      "optimizer_success": false,
+      "message": "Inequality constraints incompatible",
+      "iterations": 14,
+      "objective": 1.4540386293130028,
+      "objective_multiplier": 1.0,
+      "feasible": true,
+      "optimality_residual": 4.999999999992931e+16,
+      "optimality_certified": false,
+      "parameters": {
+        "initial_velocity_m_s": [
+          33.21793242395818,
+          -1.1730655780346309,
+          0.572051789928517
+        ],
+        "drag_coefficient": 0.22,
+        "b_y": 0.027181459039733194,
+        "b_z": -0.12003117150047415
+      }
+    },
+    {
+      "start": 2,
+      "success": false,
+      "optimizer_success": false,
+      "message": "Inequality constraints incompatible",
+      "iterations": 43,
+      "objective": 1.447739806326901,
+      "objective_multiplier": 1.0,
+      "feasible": true,
+      "optimality_residual": 4.99999999999296e+16,
+      "optimality_certified": false,
+      "parameters": {
+        "initial_velocity_m_s": [
+          33.218385934880025,
+          -1.152051538528431,
+          0.715219663993232
+        ],
+        "drag_coefficient": 0.22,
+        "b_y": 0.07706455524621715,
+        "b_z": -0.12361870585856863
+      }
+    }
+  ],
+  "prior_definition": "F_disk_gaussian__S_matching_marginal",
+  "success": false,
+  "parameters": null,
+  "simulation": null,
+  "objective": null,
+  "data_chi_square": null,
+  "prior_penalty": null,
+  "residuals_m": null,
+  "rms_residual_m": null,
+  "diagnostics": null,
+  "message": "没有收敛且观测窗相容的候选。",
+  "forward_calls": 1130,
+  "incompatible_calls": 188,
+  "numerical_failure_calls": 0,
+  "wall_time_s": 0.7192908750002971
+}

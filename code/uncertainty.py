@@ -44,6 +44,7 @@ class UncertaintySettings:
     student_df: float = 5.0
     broad_component_weight: float = 0.15
     broad_standard_deviation_factor: float = 3.0
+    max_sample_doublings: int = 0  # Revision experiments explicitly allow up to two extensions.
 
 
 UNCERTAINTY = UncertaintySettings()
@@ -337,6 +338,24 @@ def _convergence(first, full, settings):
             "mode_sampling_stable": mode_shift <= settings.mode_shift_tolerance_m if mode_shift is not None else a is None and b is None}
 
 
+def certify_outputs(first, full, settings):
+    """Separate certificates; unresolved mass remains in the full posterior."""
+    conv = _convergence(first, full, settings)
+    enough = full['effective_samples'] >= settings.min_effective_samples
+    known = full['unknown_event_mass'] <= settings.unknown_mass_tolerance
+    event = bool(enough and full['unknown_event_mass'] == 0 and
+                 conv['max_event_probability_change'] <= settings.event_probability_tolerance)
+    a, b = first['direct_crossing'], full['direct_crossing']
+    mean = bool(enough and known and a is not None and b is not None and
+                b['effective_samples'] >= settings.min_conditional_effective_samples and
+                conv['conditional_mean_shift_m'] is not None and
+                conv['conditional_mean_shift_m'] <= settings.mean_shift_tolerance_m)
+    region = bool(mean and b['region'] is not None and
+                  conv['relative_region_area_change'] is not None and
+                  conv['relative_region_area_change'] <= settings.relative_area_tolerance)
+    return dict(event_probability=event, conditional_mean=mean, prediction_region=region)
+
+
 def sample_case(
     model="F", case=CASE, environment=ENVIRONMENT, solver=SOLVER, settings=INFERENCE,
     *, uncertainty=UNCERTAINTY, drag_coefficient=None, sigma_m=None, frame_correlation=0.,
@@ -346,6 +365,9 @@ def sample_case(
     wall_start = time.perf_counter()
     if not isinstance(uncertainty.base_samples, int) or uncertainty.base_samples < 2:
         raise ValueError("base_samples 必须为不小于 2 的整数。")
+    if (not isinstance(uncertainty.max_sample_doublings, int) or isinstance(uncertainty.max_sample_doublings, bool)
+            or not 0 <= uncertainty.max_sample_doublings <= 2):
+        raise ValueError("追加预算加倍次数须为0、1或2。")
     positive_settings = (uncertainty.min_effective_samples, uncertainty.min_conditional_effective_samples,
         uncertainty.event_probability_tolerance, uncertainty.mean_shift_tolerance_m,
         uncertainty.relative_area_tolerance, uncertainty.grid_width_m, uncertainty.mode_shift_tolerance_m)
@@ -371,49 +393,60 @@ def sample_case(
         covariance, kind = proposal_covariance(posterior)
         distributions, mixture_weights = _proposal(posterior, covariance, uncertainty)
         rng = np.random.default_rng(seed)
-        count = 2*uncertainty.base_samples
-        points, log_q = draw_proposal(distributions, mixture_weights, count, rng)
-        log_target = np.array([posterior.log_density(q) for q in points])
-        weights = normalize_log_weights(log_target-log_q)
-        draws = []
-        for i, (q, w) in enumerate(zip(points, weights)):
-            params = _parameters(model, q*posterior.scales, posterior.cd)
-            draw = {"parameters": (q*posterior.scales).tolist(), "weight": float(w),
-                    "event": "rejected", "goal_yz_m": None, "arrival_time_s": None,
-                    "log_target": float(log_target[i]) if isfinite(log_target[i]) else None,
-                    "log_proposal": float(log_q[i])}
-            if w > 0:
-                trajectory = simulate(model, params, case.times_s, case, environment, solver)
-                if trajectory["event"] == "failure":
-                    trajectory = simulate(model, params, case.times_s, case, environment, _retry_solver(solver))
-                event = trajectory["event"]
-                if event != "failure" and any(p is None for p in trajectory["positions_m"]):
-                    event = "failure"  # 与已计算似然的观测窗相冲突，保留质量，禁止删除。
-                if event == "goal":
-                    draw.update(event="goal_inside" if is_in_goal_opening(trajectory["event_position_m"], case)
-                                else "goal_outside", goal_yz_m=list(trajectory["event_position_m"][1:]),
-                                arrival_time_s=trajectory["event_time_s"])
-                else:
-                    draw["event"] = event
-            draws.append(draw)
-            if progress is not None and ((i+1) % 500 == 0 or i+1 == count):
-                progress(i+1, count)
-        summary = summarize_candidates(draws, case, uncertainty, settings.prediction_region_mass)
-        # 前 N 与完整 2N 共用同一固定提议，前缀重新归一化。
-        prefix_weights = normalize_log_weights((log_target-log_q)[:uncertainty.base_samples])
-        prefix = [{**d, "weight": float(w)} for d, w in zip(draws[:uncertainty.base_samples], prefix_weights)]
-        first = summarize_candidates(prefix, case, uncertainty, settings.prediction_region_mass)
-        convergence = _convergence(first, summary, uncertainty)
+        draws, all_targets, all_proposals, stages = [], [], [], []
+        for extension in range(uncertainty.max_sample_doublings+1):
+            count = 2*uncertainty.base_samples*2**extension
+            points, log_q = draw_proposal(distributions, mixture_weights, count-len(draws), rng)
+            targets = np.array([posterior.log_density(q) for q in points])
+            for q, target, proposal in zip(points, targets, log_q):
+                params = _parameters(model, q*posterior.scales, posterior.cd)
+                draw = {"parameters": (q*posterior.scales).tolist(), "weight": 0.,
+                        "event": "rejected", "goal_yz_m": None, "arrival_time_s": None,
+                        "log_target": float(target) if isfinite(target) else None,
+                        "log_proposal": float(proposal)}
+                if isfinite(target):
+                    trajectory = simulate(model, params, case.times_s, case, environment, solver)
+                    if trajectory["event"] == "failure":
+                        trajectory = simulate(model, params, case.times_s, case, environment, _retry_solver(solver))
+                    event = trajectory["event"]
+                    if event != "failure" and any(p is None for p in trajectory["positions_m"]):
+                        event = "failure"
+                    if event == "goal":
+                        draw.update(event="goal_inside" if is_in_goal_opening(trajectory["event_position_m"], case)
+                                    else "goal_outside", goal_yz_m=list(trajectory["event_position_m"][1:]),
+                                    arrival_time_s=trajectory["event_time_s"])
+                    else:
+                        draw["event"] = event
+                draws.append(draw)
+                if progress is not None and (len(draws)%500 == 0 or len(draws)==count):
+                    progress(len(draws),count)
+            all_targets.extend(targets.tolist()); all_proposals.extend(log_q.tolist())
+            log_target=np.asarray(all_targets); log_q=np.asarray(all_proposals)
+            weights=normalize_log_weights(log_target-log_q)
+            for draw,weight in zip(draws,weights): draw['weight']=float(weight)
+            summary=summarize_candidates(draws,case,uncertainty,settings.prediction_region_mass)
+            half=count//2
+            prefix_weights=normalize_log_weights((log_target-log_q)[:half])
+            prefix=[{**d,"weight":float(w)} for d,w in zip(draws[:half],prefix_weights)]
+            first=summarize_candidates(prefix,case,uncertainty,settings.prediction_region_mass)
+            convergence=_convergence(first,summary,uncertainty)
+            validity=certify_outputs(first,summary,uncertainty)
+            stages.append(dict(total_proposals=count, effective_samples=summary['effective_samples'],
+                               unknown_event_mass=summary['unknown_event_mass'],
+                               output_validity=validity, convergence=convergence))
+            # Same joint stopping rule as baseline; output release is separately certified.
+            if (summary['effective_samples'] >= uncertainty.min_effective_samples and
+                convergence['sampling_stable'] and summary['unknown_event_mass'] <= uncertainty.unknown_mass_tolerance):
+                break
         for condition in ("direct_crossing", "inside_conditioned"):
-            a, b = first[condition], summary[condition]
+            a,b=first[condition],summary[condition]
             if b is not None:
-                shift = (float(np.linalg.norm(np.array(a["most_likely_cell"]["center_yz_m"])
-                                              - b["most_likely_cell"]["center_yz_m"]))
-                         if a is not None else None)
-                b["mode_sampling_shift_m"] = shift
-                b["mode_stable"] = bool(b["mode_grid_stable"] and shift is not None
-                    and shift <= uncertainty.mode_shift_tolerance_m
-                    and b["effective_samples"] >= uncertainty.min_conditional_effective_samples)
+                shift=(float(np.linalg.norm(np.array(a["most_likely_cell"]["center_yz_m"])-
+                       b["most_likely_cell"]["center_yz_m"])) if a is not None else None)
+                b['mode_sampling_shift_m']=shift
+                b['mode_stable']=bool(b['mode_grid_stable'] and shift is not None and
+                    shift <= uncertainty.mode_shift_tolerance_m and
+                    b['effective_samples'] >= uncertainty.min_conditional_effective_samples)
         # 检查局部高斯的参数边界截断率，独立随机流，不改变重要性样本。
         probes = np.random.default_rng(seed+1).multivariate_normal(posterior.center, covariance, size=256)
         outside = float(np.mean([not isfinite(posterior.prior(q)) for q in probes]))
@@ -421,10 +454,11 @@ def sample_case(
         success = (summary["effective_samples"] >= uncertainty.min_effective_samples
                    and convergence["sampling_stable"]
                    and summary["unknown_event_mass"] <= uncertainty.unknown_mass_tolerance)
-        result.update(success=bool(success), summary=summary, draws=draws,
+        result.update(success=bool(success), summary=summary, draws=draws, output_validity=validity,
             message="条件后验采样通过本轮诊断；区域尚未经外部校准。" if success else
                     "采样/事件诊断未通过，保留诊断与候选，不发布正式概率预测。",
-            diagnostics={**convergence, "base_samples": uncertainty.base_samples,
+            diagnostics={**convergence, "sampling_stages": stages, "output_validity": validity,
+                "max_sample_doublings": uncertainty.max_sample_doublings, "base_samples": uncertainty.base_samples,
                 "total_proposals": count, "positive_weight_count": int(np.sum(weights > 0)),
                 "proposal_component_count": len(distributions), "proposal_probabilities": mixture_weights.tolist(),
                 "proposal_covariance_q": covariance.tolist(), "curvature_source": kind,
@@ -443,7 +477,7 @@ def sample_case(
 
 
 def uncertainty_observation(record, model="F", *, uncertainty=UNCERTAINTY,
-                            drag_coefficient=None, sigma_override_m=None, seed=RANDOM_SEED, starts=3):
+                            drag_coefficient=None, sigma_override_m=None, seed=RANDOM_SEED, starts=3, settings=INFERENCE):
     """返回 evaluate 格式的条件均值/区域/概率，以及完整采样日志。"""
     from evaluate import point_prediction
     cd = INFERENCE.fixed_drag_coefficient if drag_coefficient is None else drag_coefficient
@@ -460,21 +494,24 @@ def uncertainty_observation(record, model="F", *, uncertainty=UNCERTAINTY,
         measurement = record["measurement"]
         if sigma_override_m is None and measurement["mode"] != "gaussian":
             raise ValueError("非高斯误差暂需显式 sigma 高斯工作假设。")
-        result = sample_case(model, case, Environment(**known), uncertainty=uncertainty,
+        result = sample_case(model, case, Environment(**known), settings=settings, uncertainty=uncertainty,
             drag_coefficient=drag_coefficient,
             sigma_m=measurement["sigma_m"] if sigma_override_m is None else sigma_override_m,
             frame_correlation=measurement["frame_correlation"] if measurement["mode"] == "gaussian" else 0.,
             seed=seed, starts=starts)
         prediction["message"] = result["message"]
-        if result["success"]:
-            summary = result["summary"]
-            direct = summary["direct_crossing"]
-            prediction["status"] = "ok"
-            if direct is not None and direct["effective_samples"] >= uncertainty.min_conditional_effective_samples:
-                prediction.update(point_yz_m=direct["mean_yz_m"], arrival_time_s=direct["arrival_time_median_s"],
-                                  region=direct["region"])
-            if summary["unknown_event_mass"] == 0:
-                prediction["goal_probability"] = summary["event_probabilities"]["goal_inside"]
+        validity = result.get('output_validity', {})
+        if result.get('summary') is not None and any(validity.values()):
+            summary=result['summary']; direct=summary['direct_crossing']
+            prediction['status']='ok'
+            if validity.get('conditional_mean'):
+                prediction.update(point_yz_m=direct['mean_yz_m'],arrival_time_s=direct['arrival_time_median_s'])
+            if validity.get('prediction_region'):
+                prediction['region']=direct['region']
+            if validity.get('event_probability'):
+                prediction['goal_probability']=summary['event_probabilities']['goal_inside']
+            if not result['success']:
+                prediction['message']='部分输出通过独立认证；缺失项及联合失败原因见诊断。'
         return prediction, result
     except (ValueError, RuntimeError, np.linalg.LinAlgError) as error:
         prediction["message"] = str(error)

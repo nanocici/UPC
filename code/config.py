@@ -87,6 +87,8 @@ class InferenceSettings:
     drag_prior_mean: float = 0.22
     drag_prior_std: float = 0.10  # 在 drag_bounds 内截断。
     transverse_prior_std: float = 0.20
+    vertical_force_prior_std: Optional[float] = None  # by; None follows shared scale.
+    side_force_prior_std: Optional[float] = None  # bz; None follows shared scale.
     transverse_norm_max: float = 0.50  # F 中 sqrt(by**2+bz**2) 的上限。
     vx_bounds_m_s: tuple[float, float] = (0.0, 60.0)  # 下界严格：vx > 0。
     vy_bounds_m_s: tuple[float, float] = (-30.0, 30.0)

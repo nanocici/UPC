@@ -1,0 +1,22 @@
+{
+  "dataset": "data/independent_200",
+  "data_seed": 20261110,
+  "method": "F1_round2",
+  "task_count": 800,
+  "variants": {
+    "F0": {
+      "model": "F",
+      "vertical_prior_std": null
+    },
+    "F1": {
+      "model": "F",
+      "vertical_prior_std": 0.1
+    }
+  },
+  "split": {
+    "calibration": 100,
+    "test": 100
+  },
+  "time_q_s": 0.015188910308210842,
+  "notes": "Independent test; time q frozen; spatial calibration only on calibration split."
+}

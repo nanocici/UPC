@@ -1,0 +1,496 @@
+{
+  "model": "F",
+  "success": true,
+  "message": "均值、区域和事件采样通过诊断；众数格尚不稳定，不能宣称峰值位置已稳定。",
+  "fit": {
+    "model": "F",
+    "mode": "map",
+    "drag_coefficient": 0.22,
+    "parameter_names": [
+      "vx0",
+      "vy0",
+      "vz0",
+      "b_y",
+      "b_z"
+    ],
+    "parameter_scales": [
+      31.662351809404488,
+      31.662351809404488,
+      31.662351809404488,
+      0.1,
+      0.2
+    ],
+    "observation_covariance_m2": [
+      [
+        0.0001,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0001,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0001,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0001,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0001,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0001
+      ]
+    ],
+    "optimizer_runs": [
+      {
+        "start": 0,
+        "success": true,
+        "optimizer_success": true,
+        "message": "Optimization terminated successfully",
+        "iterations": 12,
+        "objective": 0.764830954456303,
+        "objective_multiplier": 1.0,
+        "feasible": true,
+        "optimality_residual": 3.5671843256998975e-05,
+        "optimality_certified": true,
+        "parameters": {
+          "initial_velocity_m_s": [
+            30.100894280726415,
+            9.099849348218124,
+            6.893581956123032
+          ],
+          "drag_coefficient": 0.22,
+          "b_y": -0.007401034017280227,
+          "b_z": -0.12072951725293674
+        }
+      },
+      {
+        "start": 1,
+        "success": true,
+        "optimizer_success": true,
+        "message": "Optimization terminated successfully",
+        "iterations": 12,
+        "objective": 0.7648309544563562,
+        "objective_multiplier": 1.0,
+        "feasible": true,
+        "optimality_residual": 0.00012332799226356166,
+        "optimality_certified": true,
+        "parameters": {
+          "initial_velocity_m_s": [
+            30.100894210087993,
+            9.099849495129703,
+            6.893581887499272
+          ],
+          "drag_coefficient": 0.22,
+          "b_y": -0.007401068596765279,
+          "b_z": -0.1207295882017898
+        }
+      },
+      {
+        "start": 2,
+        "success": true,
+        "optimizer_success": true,
+        "message": "Optimization terminated successfully",
+        "iterations": 11,
+        "objective": 0.7648309544562681,
+        "objective_multiplier": 1.0,
+        "feasible": true,
+        "optimality_residual": 2.2151946943416206e-05,
+        "optimality_certified": true,
+        "parameters": {
+          "initial_velocity_m_s": [
+            30.10089427936067,
+            9.099849368341381,
+            6.893581907005499
+          ],
+          "drag_coefficient": 0.22,
+          "b_y": -0.007401048998133659,
+          "b_z": -0.12072952815706828
+        }
+      }
+    ],
+    "prior_definition": "F_disk_gaussian__S_matching_marginal",
+    "success": true,
+    "parameters": {
+      "initial_velocity_m_s": [
+        30.10089427936067,
+        9.099849368341381,
+        6.893581907005499
+      ],
+      "drag_coefficient": 0.22,
+      "b_y": -0.007401048998133659,
+      "b_z": -0.12072952815706828
+    },
+    "simulation": {
+      "times_s": [
+        0.05,
+        0.1
+      ],
+      "positions_m": [
+        [
+          1.4932681838308433,
+          0.4431635846610181,
+          0.43976512630799763
+        ],
+        [
+          2.9634607574236975,
+          0.8634462574169397,
+          0.7401294866965258
+        ]
+      ],
+      "event": "goal",
+      "event_time_s": 0.38742518302060963,
+      "event_position_m": [
+        11.0,
+        2.886960821375175,
+        1.9251618680318108
+      ],
+      "message": "首次正向过门线；入框需另检查 y/z。"
+    },
+    "objective": 0.7648309544562681,
+    "data_chi_square": 1.1597938820595504,
+    "prior_penalty": 0.18493401342649302,
+    "residuals_m": [
+      [
+        -0.006731816169156746,
+        -0.006836415338981938,
+        -0.00023487369200236863
+      ],
+      [
+        0.003460757423647376,
+        0.0034462574167468674,
+        0.0001294866964567376
+      ]
+    ],
+    "rms_residual_m": 0.004396577991384418,
+    "diagnostics": {
+      "data_jacobian_scaled": [
+        [
+          155.76660298903647,
+          0.47485980370029185,
+          -0.28949698971352156,
+          0.1411024486142601,
+          -0.3723177977049976
+        ],
+        [
+          -1.8730401288387966,
+          156.5177497640613,
+          -0.23973988377810512,
+          -0.0004942316000901809,
+          1.2624353287806478
+        ],
+        [
+          -0.1925265574751358,
+          -0.07286245523589403,
+          156.7908235373769,
+          -0.6305541910836212,
+          -7.803840906852588e-05
+        ],
+        [
+          306.5824102335765,
+          1.8600455908827356,
+          -1.114822283375667,
+          0.5410547743169724,
+          -1.4277379989445256
+        ],
+        [
+          -7.303874018960088,
+          309.55277475621784,
+          -0.9072451462301765,
+          -0.003866989506386254,
+          4.962412222831271
+        ],
+        [
+          -0.7265867707528555,
+          -0.27652935274930057,
+          310.6322704035327,
+          -2.4761594319420874,
+          -0.0005957956350526786
+        ]
+      ],
+      "data_jacobian_rank": 5,
+      "data_jacobian_singular_values": [
+        348.57677419778565,
+        348.17202357731713,
+        342.0818138889619,
+        1.1516932393324948,
+        0.5636839377156839
+      ],
+      "data_jacobian_condition": 618.3904682655761,
+      "boundary_hits": [],
+      "converged_start_count": 3,
+      "optimality_certified": true,
+      "objective_multiplier": 1.0,
+      "optimality_residual": 2.2151946943416206e-05
+    },
+    "message": "观测窗反演收敛；最终事件和预测能力须分别检查。",
+    "forward_calls": 415,
+    "incompatible_calls": 4,
+    "numerical_failure_calls": 0,
+    "wall_time_s": 0.19675304099655477
+  },
+  "summary": {
+    "effective_samples": 2765.1298477072637,
+    "event_probabilities": {
+      "goal_inside": 0.9666570836862819,
+      "goal_outside": 0.03334291631371817,
+      "ground": 0.0,
+      "boundary": 0.0,
+      "unresolved": 0.0,
+      "failure": 0.0
+    },
+    "unknown_event_mass": 0.0,
+    "direct_inside_probability_bounds": [
+      0.9666570836862819,
+      0.9666570836862819
+    ],
+    "direct_crossing": {
+      "posterior_mass": 1.0,
+      "effective_samples": 2765.1298477072637,
+      "mean_yz_m": [
+        2.9057531544942057,
+        1.9285065612977923
+      ],
+      "most_likely_cell": {
+        "center_yz_m": [
+          2.8975,
+          1.7791666666666668
+        ],
+        "cell_probability": 0.025685989400964965,
+        "grid_width_m": 0.10166666666666667,
+        "grid_shift_m": 0.0
+      },
+      "grid_variants": [
+        {
+          "center_yz_m": [
+            2.8720833333333333,
+            1.8554166666666667
+          ],
+          "cell_probability": 0.007098757523370534,
+          "grid_width_m": 0.050833333333333335,
+          "grid_shift_m": 0.0
+        },
+        {
+          "center_yz_m": [
+            2.9483333333333333,
+            2.0333333333333337
+          ],
+          "cell_probability": 0.023244294467112226,
+          "grid_width_m": 0.10166666666666667,
+          "grid_shift_m": 0.050833333333333335
+        }
+      ],
+      "mode_grid_stable": false,
+      "max_grid_mode_shift_m": 0.2592001586076334,
+      "region": {
+        "center_yz_m": [
+          2.9057531544942057,
+          1.9285065612977923
+        ],
+        "covariance_m2": [
+          [
+            0.11773947070453203,
+            0.00228166129867668
+          ],
+          [
+            0.0022816612986766797,
+            0.05313459667801144
+          ]
+        ],
+        "threshold": 4.697627799859659
+      },
+      "region_area_m2": 1.1668027273961783,
+      "arrival_time_median_s": 0.38768793313392635,
+      "arrival_time_90_interval_s": [
+        0.38273881673645554,
+        0.39430455129178865
+      ],
+      "mode_sampling_shift_m": 0.20333333333333337,
+      "mode_stable": false
+    },
+    "inside_conditioned": {
+      "posterior_mass": 0.9666570836862819,
+      "effective_samples": 2670.261527299923,
+      "mean_yz_m": [
+        2.888117824088897,
+        1.9185817935524072
+      ],
+      "most_likely_cell": {
+        "center_yz_m": [
+          2.8975,
+          1.7791666666666668
+        ],
+        "cell_probability": 0.02657197659278839,
+        "grid_width_m": 0.10166666666666667,
+        "grid_shift_m": 0.0
+      },
+      "grid_variants": [
+        {
+          "center_yz_m": [
+            2.8720833333333333,
+            1.8554166666666667
+          ],
+          "cell_probability": 0.007343615065954827,
+          "grid_width_m": 0.050833333333333335,
+          "grid_shift_m": 0.0
+        },
+        {
+          "center_yz_m": [
+            2.9483333333333333,
+            2.0333333333333337
+          ],
+          "cell_probability": 0.024046060241416416,
+          "grid_width_m": 0.10166666666666667,
+          "grid_shift_m": 0.050833333333333335
+        }
+      ],
+      "mode_grid_stable": false,
+      "max_grid_mode_shift_m": 0.2592001586076334,
+      "region": {
+        "center_yz_m": [
+          2.888117824088897,
+          1.9185817935524072
+        ],
+        "covariance_m2": [
+          [
+            0.10452781627133012,
+            0.0010744154485236284
+          ],
+          [
+            0.0010744154485236275,
+            0.04822574676924018
+          ]
+        ],
+        "threshold": 4.697528978005791
+      },
+      "region_area_m2": 1.047671253654959,
+      "arrival_time_median_s": 0.3875583894674447,
+      "arrival_time_90_interval_s": [
+        0.38269604537844687,
+        0.3934114128573836
+      ],
+      "mode_sampling_shift_m": 0.20333333333333337,
+      "mode_stable": false
+    }
+  },
+  "diagnostics": {
+    "sampling_stable": true,
+    "max_event_probability_change": 0.0029617709785045854,
+    "conditional_mean_shift_m": 0.009980578109928473,
+    "relative_region_area_change": 0.006670333408565476,
+    "conditional_mode_cell_shift_m": 0.20333333333333337,
+    "mode_sampling_stable": false,
+    "sampling_stages": [
+      {
+        "total_proposals": 4000,
+        "effective_samples": 2765.1298477072637,
+        "unknown_event_mass": 0.0,
+        "output_validity": {
+          "event_probability": true,
+          "conditional_mean": true,
+          "prediction_region": true
+        },
+        "convergence": {
+          "sampling_stable": true,
+          "max_event_probability_change": 0.0029617709785045854,
+          "conditional_mean_shift_m": 0.009980578109928473,
+          "relative_region_area_change": 0.006670333408565476,
+          "conditional_mode_cell_shift_m": 0.20333333333333337,
+          "mode_sampling_stable": false
+        }
+      }
+    ],
+    "output_validity": {
+      "event_probability": true,
+      "conditional_mean": true,
+      "prediction_region": true
+    },
+    "max_sample_doublings": 0,
+    "base_samples": 2000,
+    "total_proposals": 4000,
+    "positive_weight_count": 3822,
+    "proposal_component_count": 2,
+    "proposal_probabilities": [
+      0.85,
+      0.15
+    ],
+    "proposal_covariance_q": [
+      [
+        1.802069021497515e-05,
+        -2.5940948933847457e-05,
+        -8.09251331157736e-06,
+        -0.0011359310395907874,
+        0.0018223391483628924
+      ],
+      [
+        -2.5940948933847457e-05,
+        9.659197174451302e-05,
+        -1.2539570926179916e-06,
+        -0.00017972826494244145,
+        -0.00616830369401989
+      ],
+      [
+        -8.09251331157736e-06,
+        -1.2539570926179916e-06,
+        4.71899234609641e-05,
+        0.00543524600493159,
+        8.794541793025477e-05
+      ],
+      [
+        -0.0011359310395907874,
+        -0.00017972826494244145,
+        0.00543524600493159,
+        0.7588399101598107,
+        0.012317098089379912
+      ],
+      [
+        0.0018223391483628924,
+        -0.00616830369401989,
+        8.794541793025477e-05,
+        0.012317098089379912,
+        0.4309980776395587
+      ]
+    ],
+    "curvature_source": "full_posterior_hessian",
+    "local_gaussian_boundary_rejection_fraction": 0.0,
+    "local_gaussian_basic_checks_passed": true,
+    "posterior_assumed_gaussian": false,
+    "likelihood_retries": 0,
+    "unresolved_likelihood_failures": 0
+  },
+  "output_validity": {
+    "event_probability": true,
+    "conditional_mean": true,
+    "prediction_region": true
+  },
+  "wall_time_s": 7.620442125000409
+}

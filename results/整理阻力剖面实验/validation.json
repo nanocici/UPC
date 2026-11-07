@@ -1,0 +1,22 @@
+{
+  "checks": {
+    "fit_count_is_130": true,
+    "five_groups_26_nodes_each": true,
+    "all_fits_success_and_crossing": true,
+    "all_objective_decompositions_match": true,
+    "all_ls_priors_zero": true,
+    "verification_20_of_20": true,
+    "fixed_forward_78_records": true,
+    "source_files_match_run_hashes": true,
+    "source_snapshots_match_run_hashes": true,
+    "ls_vs_forward_all_pass": true
+  },
+  "all_pass": true,
+  "project_tests": {
+    "command": ".venv/bin/python -m unittest discover -s tests",
+    "passed": 133,
+    "new_tests": 6,
+    "seconds": 4.9
+  },
+  "visual_review": "Both PNGs inspected: labels and legends readable, no clipping."
+}

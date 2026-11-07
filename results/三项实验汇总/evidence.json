@@ -1,0 +1,210 @@
+{
+  "date": "2026-11-08 Asia/Shanghai",
+  "scope": "Synthesis only; no resampling, refitting or calibration.",
+  "sources": {
+    "results/整理阻力剖面实验/summary.json": "3a143d620cb95fb5e6f43a257092caad83696b72166fca2d1170721ac86b4ebc",
+    "results/整理阻力剖面实验/profile.csv": "3c4ce052ae3db50eb2db60ebb71d3458cbd1d813ba213e44e7289d7691ca59fd",
+    "results/整理阻力剖面实验/validation.json": "ae3309a50300a5c728c7a9fafa37b7f0aa7e2412f2e6b85dc59ebc264c898af5",
+    "results/算例稳定性实验/summary.json": "ae8fdcede62a78b61f8e65ec145fe7bdd8370bc442803344e90815060c3a3606",
+    "results/算例稳定性实验/kde_peaks.csv": "b6c7c9df10e4c2037f9361dd01088532ce34995edfa75be56ef9f4dd361c8927",
+    "results/算例稳定性实验/validation.json": "eebf3dc772fa102d4b39a4bf44f4e46cc5ab41e24f6c7d4d055de67f75623e61",
+    "results/最终主点性能实验/summary.json": "51bab4006cd5789d0d5e1bb4dd292905baf253d25aba2c2b8b5e843e1bb69f21",
+    "results/最终主点性能实验/per_case.csv": "c5e246030c96c726c9e8405acafc73b84a40c1f1f87f0f849c753fb411f067d6",
+    "results/最终主点性能实验/stability.csv": "572a4bdd1562ff9e37c482062e68b4d6fbd6ae2fdbe89f7eca12090dcd37e3b6",
+    "results/最终主点性能实验/stability_summary.json": "de582264193dcc137095c30d038602a4e8df5133565277111ef85f5b6a73b8cf",
+    "results/最终主点性能实验/prediction_manifest.json": "1fa424c77edc776b2fa3d8f48b6d5da1288add30fa907db043ae7cc1368d7c5c",
+    "results/最终主点性能实验/numerical_validation.json": "e8efdaebfc18f3172e0ba1d4b219f0d7e6d2c8b5d8940e0291020a3ee7a272c9",
+    "results/最终主点性能实验/validation.json": "2b042a8ff8f97edaafafb30f5b8bbbc3b64e543f5685b50371a115a6ab59d428",
+    "results/final_case/final_case.json": "18e97862d5fc101ef085b28deb66af4171cb65fd801da0854ee47ab6da4002ad",
+    "results/independent_200/independent_summary.json": "7a0c7e0d7b6dccec1702a23a39c5a8f94fa5ab3aacf4b701116615ea6ecaf2ec"
+  },
+  "figures": [
+    {
+      "role": "主图1",
+      "file": "figures/fig01_drag_fit.png",
+      "source": "results/整理阻力剖面实验/拟合剖面图.png",
+      "sha256": "7f3e66e44c27e11ac0b285caff35d136bd3f54ccbf750a30cb243b008ca37a11"
+    },
+    {
+      "role": "主图2",
+      "file": "figures/fig02_mode_convergence.png",
+      "source": "results/算例稳定性实验/sampling_convergence.png",
+      "sha256": "c71c0d966bdacf5ea8b74c2ebe4f62283defa0eefb33d4576d5a622a98a25f2a"
+    },
+    {
+      "role": "主图3",
+      "file": "figures/fig03_point_errors.png",
+      "source": "results/最终主点性能实验/point_errors.png",
+      "sha256": "72ba6e0b931c9fd53c602f09959e744986a5533a2f327bdce52d98a79661fe54"
+    },
+    {
+      "role": "补充图S1",
+      "file": "figures/figS01_region_stability.png",
+      "source": "results/最终主点性能实验/coverage_and_stability.png",
+      "sha256": "584daddc70815b10fba0756db2ccf7ce740802d0a1233d975df71b24a7e7a130"
+    },
+    {
+      "role": "补充图S2",
+      "file": "figures/figS02_case_density.png",
+      "source": "results/算例稳定性实验/kde_density.png",
+      "sha256": "a03c4e672e8aee0bad2fb34c279bfd29633bb0bab05f1fd6bfc1ac45e5b8a4de"
+    },
+    {
+      "role": "补充图S3",
+      "file": "figures/figS03_drag_goal.png",
+      "source": "results/整理阻力剖面实验/门线预测变化图.png",
+      "sha256": "433d21c5107e85c9dfdc1d405bad52d20a310ec20c048bd3b55a147a809dc890"
+    },
+    {
+      "role": "补充图S4",
+      "file": "figures/figS04_bandwidth.png",
+      "source": "results/算例稳定性实验/bandwidth_sensitivity.png",
+      "sha256": "f3f0b49432bf427e9eaa25e649ae6d4ab242e5b7ff638f95d68fda138b8c957a"
+    }
+  ],
+  "primary_point_comparison": {
+    "observations": 100,
+    "sources": 100,
+    "available": 95,
+    "true_inside_observations": 49,
+    "true_inside_sources": 49,
+    "true_direct_observations": 77,
+    "true_direct_sources": 77,
+    "stable_inside_count": 49,
+    "stable_inside_rate": 1.0,
+    "stable_inside_missing": 0,
+    "peak": {
+      "n": 49,
+      "median_m": 0.2708808113195518,
+      "p90_m": 0.5466804610648162,
+      "rmse_m": 0.3353727080964302
+    },
+    "g_all_eligible": {
+      "n": 49,
+      "median_m": 0.37388956278520064,
+      "p90_m": 0.5968658925686886,
+      "rmse_m": 0.4128621432545428
+    },
+    "mean_auxiliary": {
+      "n": 49,
+      "median_m": 0.27835423802222525,
+      "p90_m": 0.5514414953059777,
+      "rmse_m": 0.34521384131174965
+    },
+    "paired_peak": {
+      "n": 49,
+      "median_m": 0.2708808113195518,
+      "p90_m": 0.5466804610648162,
+      "rmse_m": 0.3353727080964302
+    },
+    "paired_g": {
+      "n": 49,
+      "median_m": 0.37388956278520064,
+      "p90_m": 0.5968658925686886,
+      "rmse_m": 0.4128621432545428
+    },
+    "raw_peak_exploratory": {
+      "n": 49,
+      "median_m": 0.2708808113195518,
+      "p90_m": 0.5466804610648162,
+      "rmse_m": 0.3353727080964302
+    },
+    "stable_and_error_below_05_rate": 0.8367346938775511,
+    "region_coverage": 0.8831168831168831,
+    "region_provided": 77,
+    "region_median_area_m2": 0.7687603558840225,
+    "direct_peak": {
+      "n": 77,
+      "median_m": 0.3483322586771933,
+      "p90_m": 0.6439822107955727,
+      "rmse_m": 0.41128661491616075
+    },
+    "direct_mean": {
+      "n": 77,
+      "median_m": 0.3458345864208286,
+      "p90_m": 0.6352555588064834,
+      "rmse_m": 0.4064829704404282
+    },
+    "failure_reasons": {}
+  },
+  "overall": {
+    "observations": 400,
+    "sources": 100,
+    "available": 380,
+    "true_inside_observations": 196,
+    "true_inside_sources": 49,
+    "true_direct_observations": 308,
+    "true_direct_sources": 77,
+    "stable_inside_count": 193,
+    "stable_inside_rate": 0.9846938775510204,
+    "stable_inside_missing": 3,
+    "peak": {
+      "n": 193,
+      "median_m": 0.2859419275499724,
+      "p90_m": 0.5605363619472292,
+      "rmse_m": 0.3756139113938241
+    },
+    "g_all_eligible": {
+      "n": 195,
+      "median_m": 0.3785884297002513,
+      "p90_m": 0.627523466382284,
+      "rmse_m": 0.43017783191973724
+    },
+    "mean_auxiliary": {
+      "n": 196,
+      "median_m": 0.2960344150194222,
+      "p90_m": 0.5640516792380721,
+      "rmse_m": 0.38214245308798944
+    },
+    "paired_peak": {
+      "n": 193,
+      "median_m": 0.2859419275499724,
+      "p90_m": 0.5605363619472292,
+      "rmse_m": 0.3756139113938241
+    },
+    "paired_g": {
+      "n": 193,
+      "median_m": 0.3785884297002513,
+      "p90_m": 0.6277342280465473,
+      "rmse_m": 0.4312733706956196
+    },
+    "raw_peak_exploratory": {
+      "n": 196,
+      "median_m": 0.28696704273334483,
+      "p90_m": 0.5601200281390026,
+      "rmse_m": 0.3748945818474264
+    },
+    "stable_and_error_below_05_rate": 0.8214285714285714,
+    "region_coverage": 0.8668831168831169,
+    "region_provided": 303,
+    "region_median_area_m2": 0.9886746185077657,
+    "direct_peak": {
+      "n": 303,
+      "median_m": 0.33228043842547067,
+      "p90_m": 0.6301014665110122,
+      "rmse_m": 0.4076020538033147
+    },
+    "direct_mean": {
+      "n": 308,
+      "median_m": 0.3231476437019299,
+      "p90_m": 0.6152437707473905,
+      "rmse_m": 0.40137677757348383
+    },
+    "failure_reasons": {
+      "seed_0:sampling_diagnostics": 2,
+      "seed_1:sampling_diagnostics": 1
+    }
+  },
+  "primary_paired_ci95": [
+    -0.15732643366068993,
+    -0.02659339192732933
+  ],
+  "raw_grid_primary_pass": [
+    20,
+    49
+  ],
+  "raw_grid_pooled_pass": [
+    77,
+    196
+  ]
+}

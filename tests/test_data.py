@@ -155,6 +155,14 @@ class DatasetTests(unittest.TestCase):
                          {"development": 9, "calibration": 3, "test": 3})
         self.assertEqual(sum(self.dataset["manifest"]["event_counts"].values()), 15)
 
+    def test_development_only_split_is_supported(self):
+        dataset = data.build_dataset(5, seed=42, split_fractions=(1, 0, 0))
+        self.assertEqual(dataset["manifest"]["source_counts_by_split"],
+                         {"development": 5, "calibration": 0, "test": 0})
+        self.assertTrue(all(row["split"] == "development" for row in dataset["observations"]))
+        with self.assertRaises(ValueError):
+            data.build_dataset(5, seed=42, split_fractions=(0, 0, 0))
+
     def test_inputs_exclude_truth_and_hide_unknown_wind(self):
         for row in self.dataset["observations"]:
             self.assertNotIn("parameters", row)

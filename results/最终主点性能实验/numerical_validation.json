@@ -1,0 +1,55 @@
+{
+  "checked_case_ids": [
+    "source_00100_noise_00",
+    "source_00103_noise_00",
+    "source_00106_noise_01",
+    "source_00109_noise_02",
+    "source_00112_noise_03",
+    "source_00116_noise_00",
+    "source_00119_noise_01",
+    "source_00122_noise_02",
+    "source_00125_noise_02",
+    "source_00128_noise_03",
+    "source_00132_noise_00",
+    "source_00135_noise_01",
+    "source_00138_noise_02",
+    "source_00141_noise_03",
+    "source_00151_noise_01",
+    "source_00154_noise_02",
+    "source_00157_noise_03",
+    "source_00161_noise_00",
+    "source_00164_noise_01",
+    "source_00167_noise_02",
+    "source_00170_noise_03",
+    "source_00174_noise_00",
+    "source_00177_noise_00",
+    "source_00180_noise_01",
+    "source_00183_noise_02",
+    "source_00186_noise_03",
+    "source_00190_noise_00",
+    "source_00193_noise_01",
+    "source_00196_noise_02"
+  ],
+  "skipped_noncomputed_case_ids": [
+    "source_00145_noise_00",
+    "source_00148_noise_01",
+    "source_00199_noise_03"
+  ],
+  "candidate_count": 464,
+  "maxima": {
+    "observation_error_m": 3.19827497818892e-11,
+    "event_position_error_m": 1.9803003681661047e-10,
+    "event_time_error_s": 6.050920875466659e-11,
+    "log_target_error": 3.2240023983831634e-08,
+    "step_halving_position_error_m": 1.8585710748197926e-10
+  },
+  "checks": {
+    "observation_accuracy": true,
+    "event_position_accuracy": true,
+    "event_time_accuracy": true,
+    "log_target_accuracy": true,
+    "step_halving_accuracy": true
+  },
+  "all_pass": true,
+  "truth_access": false
+}
