@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "seed": 20261107,
+  "source_count": 60,
+  "observation_count": 240,
+  "source_counts_by_split": {
+    "development": 36,
+    "calibration": 12,
+    "test": 12
+  },
+  "event_counts": {
+    "ground": 13,
+    "goal": 47
+  },
+  "unavailable_source_count": 2,
+  "mechanisms": [
+    "constant",
+    "variable_drag",
+    "spin",
+    "wind",
+    "combined"
+  ],
+  "noise_mode": "gaussian",
+  "noise_sigmas_m": [
+    0.005,
+    0.01,
+    0.02,
+    0.05
+  ],
+  "frame_correlation": 0.0,
+  "wind_known": false,
+  "split_fractions": [
+    0.6,
+    0.2,
+    0.2
+  ],
+  "geometry": {
+    "initial_time_s": 0.0,
+    "initial_position_m": [
+      0.0,
+      0.0,
+      0.11
+    ],
+    "times_s": [
+      0.05,
+      0.1
+    ],
+    "goal_x_m": 11.0,
+    "goal_y_bounds_m": [
+      -3.66,
+      3.66
+    ],
+    "goal_z_bounds_m": [
+      0.0,
+      2.44
+    ]
+  },
+  "solver": {
+    "method": "DOP853",
+    "rtol": 1e-08,
+    "position_atol_m": 1e-10,
+    "velocity_atol_m_s": 1e-10,
+    "max_step_s": 0.005,
+    "maximum_horizon_s": 4.0,
+    "trajectory_step_s": 0.01,
+    "event_time_tolerance_s": 1e-07
+  },
+  "sampling_assumptions": {
+    "status": "synthetic_pressure_settings_not_empirically_calibrated",
+    "velocity_ranges_m_s": [
+      [
+        22,
+        36
+      ],
+      [
+        -10,
+        10
+      ],
+      [
+        0.2,
+        10
+      ]
+    ],
+    "drag_coefficient_range": [
+      0.15,
+      0.4
+    ],
+    "transverse_ranges": [
+      [
+        0,
+        0
+      ],
+      [
+        -0.12,
+        0.12
+      ],
+      [
+        -0.25,
+        0.25
+      ]
+    ],
+    "spin_rps_range": [
+      0,
+      12
+    ],
+    "spin_axis": "isotropic",
+    "wind_ranges_m_s": [
+      [
+        -3,
+        3
+      ],
+      [
+        -3,
+        3
+      ],
+      [
+        -0.5,
+        0.5
+      ]
+    ],
+    "variable_drag": {
+      "low": 0.15,
+      "high": 0.45,
+      "transition_re": 300000.0,
+      "width_re": 50000.0
+    },
+    "magnus": {
+      "slope": 1.2,
+      "cap": 0.35,
+      "definition": "Cm times cross(unit_spin, unit_relative_velocity)"
+    }
+  },
+  "notes": [
+    "No filtering by goal outcome; failures and unavailable observations retained.",
+    "Truth and source/noise seeds must not be supplied to the predictor.",
+    "Development chooses methods; calibration fixes regions; test evaluates frozen methods.",
+    "Default 60 sources is a small demonstration, not sufficient calibration evidence."
+  ]
+}
