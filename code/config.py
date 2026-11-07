@@ -73,6 +73,7 @@ class SolverSettings:
     max_step_s: float = 0.01
     initial_horizon_s: float = 2.0
     maximum_horizon_s: float = 4.0
+    event_time_tolerance_s: float = 1e-7  # 过线/接地近同时发生时标记 boundary。
 
 
 @dataclass(frozen=True)
@@ -156,6 +157,7 @@ def validate_config() -> None:
         ENVIRONMENT.air_density_kg_m3, ENVIRONMENT.kinematic_viscosity_m2_s,
         SOLVER.relative_tolerance, SOLVER.position_absolute_tolerance_m,
         SOLVER.velocity_absolute_tolerance_m_s, SOLVER.max_step_s,
+        SOLVER.event_time_tolerance_s,
         INFERENCE.position_sigma_m, INFERENCE.rounding_half_width_m,
         INFERENCE.drag_prior_std, INFERENCE.transverse_prior_std,
         INFERENCE.transverse_norm_max,
